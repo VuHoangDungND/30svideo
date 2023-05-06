@@ -3,14 +3,14 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
+
+import Button from '../../../Button';
 import { Wrapper as PopperWrapper } from '../../../Popper';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
 import AccountItem from '../../../AccountItem';
 
 const cx = classNames.bind(styles);
-
-console.log(images.logo);
 
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
@@ -54,7 +54,10 @@ function Header() {
                         </button>
                     </div>
                 </Tippy>
-                <div className={cx('action')}></div>
+                <div className={cx('action')}>
+                    <Button rounded> Upload </Button>
+                    <Button primary> Login </Button>
+                </div>
             </div>
         </header>
     );
