@@ -34,8 +34,13 @@ function Menu({ children, items = [], onChange = defaultFn }) {
         });
     };
 
+    const handleOutHoverMenu = () => {
+        setHistory([history[0]]);
+    };
+
     return (
         <Tippy
+            onHide={handleOutHoverMenu}
             interactive
             delay={[0, 700]}
             placement="bottom-end"
