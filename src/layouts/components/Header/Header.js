@@ -45,52 +45,42 @@ const MENU_ITEMS = [
                 {
                     type: 'language',
                     code: 'en',
-                    title: 'English',
-                },
-                {
-                    type: 'language',
-                    code: 'vi',
-                    title: 'Tiếng Việt',
+                    title: 'العربية',
                 },
                 {
                     type: 'language',
                     code: 'en',
-                    title: 'English',
+                    title: 'Español',
                 },
                 {
                     type: 'language',
                     code: 'vi',
-                    title: 'Tiếng Việt',
+                    title: 'Suomi (Suomi)',
                 },
                 {
                     type: 'language',
                     code: 'en',
-                    title: 'English',
+                    title: 'Filipino (Pilipinas)',
                 },
                 {
                     type: 'language',
                     code: 'vi',
-                    title: 'Tiếng Việt',
+                    title: 'Français',
                 },
                 {
                     type: 'language',
                     code: 'en',
-                    title: 'English',
+                    title: 'עברית (ישראל)',
                 },
                 {
                     type: 'language',
                     code: 'vi',
-                    title: 'Tiếng Việt',
+                    title: 'हिंदी',
                 },
                 {
                     type: 'language',
                     code: 'en',
-                    title: 'English',
-                },
-                {
-                    type: 'language',
-                    code: 'vi',
-                    title: 'Tiếng Việt',
+                    title: 'Magyar (Magyarország)',
                 },
             ],
         },
@@ -172,6 +162,7 @@ function Header() {
                     ) : (
                         <>
                             <Button text>Upload</Button>
+                            {/* Đổi từ login sang user nhưng chưa sửa bug */}
                             <Button primary>Log in</Button>
                         </>
                     )}
