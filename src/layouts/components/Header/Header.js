@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import { useState } from 'react';
 
 import config from '~/config';
 import Button from '~/components/Button';
@@ -96,12 +97,17 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
-    const currentUser = false;
+    // const currentUser = false;
+    const [currentUser, setCurrentUser] = useState(false);
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
             case 'language':
                 // Handle change language
+                console.log(menuItem.type);
+                break;
+            case 'Log out':
+                setCurrentUser(false);
                 break;
             default:
         }
@@ -112,6 +118,7 @@ function Header() {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View profile',
             to: '/@cogaibang',
+            type: 'View profile',
         },
         {
             icon: <FontAwesomeIcon icon={faCoins} />,
@@ -128,6 +135,7 @@ function Header() {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
             to: '/logout',
+            type: 'Log out',
             separate: true,
         },
     ];
@@ -163,7 +171,9 @@ function Header() {
                         <>
                             <Button text>Upload</Button>
                             {/* Đổi từ login sang user nhưng chưa sửa bug */}
-                            <Button primary>Log in</Button>
+                            <Button primary onClick={() => setCurrentUser(true)}>
+                                Log in
+                            </Button>
                         </>
                     )}
 
