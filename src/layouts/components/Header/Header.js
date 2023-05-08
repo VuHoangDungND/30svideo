@@ -7,6 +7,7 @@ import {
     faEllipsisVertical,
     faGear,
     faKeyboard,
+    faPlus,
     faSignOut,
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
@@ -169,7 +170,9 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button text>Upload</Button>
+                            <Button text outline leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                                Upload
+                            </Button>
                             {/* Đổi từ login sang user nhưng chưa sửa bug */}
                             <Button primary onClick={() => setCurrentUser(true)}>
                                 Log in

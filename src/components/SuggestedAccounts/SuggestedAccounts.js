@@ -15,6 +15,7 @@ function SuggestedAccounts({ label }) {
             const rs = await searchServices.search('h');
 
             setResult(rs);
+            console.log(rs);
         };
         fetchApi();
     }, []);

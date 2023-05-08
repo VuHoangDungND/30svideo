@@ -1,0 +1,125 @@
+.wrapper {
+    display: flex;
+    margin-right: 4rem;
+    width: 80%;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    padding: 20px 0px;
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.content {
+    flex: 1;
+    margin-left: 1.2rem;
+    width: 62rem;
+    position: relative;
+}
+
+.header {
+    margin-right: 11.4rem;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.user {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 700;
+}
+
+.follow-btn {
+    position: absolute;
+    top: 12px;
+    right: 0;
+    min-width: 88px;
+    min-height: 28px;
+}
+
+.video-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.video {
+    background-size: cover;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 2rem;
+    height: calc(450px + ((100vw - 768px) / 1152) * 200);
+    aspect-ratio: 56.25/100;
+    object-fit: contain;
+    position: relative;
+
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.video-icons {
+    display: flex;
+    flex-direction: column;
+
+    .btn-item {
+        border: none;
+        background: none;
+        outline: none;
+        padding: 0px;
+        position: relative;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        cursor: pointer;
+        flex-direction: column;
+    }
+
+    .icon-wrapper {
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
+        font-size: 0px;
+        border-radius: 50%;
+        transition: all 200ms ease-in-out 0s;
+        background-color: rgba(22, 24, 35, 0.06);
+        margin-top: 8px;
+        margin-bottom: 6px;
+        color: rgb(22, 24, 35);
+    }
+
+    .text {
+        color: rgba(22, 24, 35, 0.75);
+        font-size: 12px;
+        line-height: 17px;
+        text-align: center;
+        font-weight: 700;
+    }
+}
+
+.icon {
+    height: 24px;
+    width: 24px;
+
+    &:hover {
+        fill: red;
+    }
+}
