@@ -1,18 +1,19 @@
 import Image from '../Image';
 import classNames from 'classnames/bind';
 import Button from '../Button';
-import ReactPlayer from 'react-player';
+import PropTypes from 'prop-types';
+// import { useEffect } from 'react';
 
+// import { db } from '~/config/firebase';
 import styles from './Video.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart, faShare } from '@fortawesome/free-solid-svg-icons';
-import { useEffect } from 'react';
-import { db } from '~/config/firebase';
 import video1 from '~/assets/videos/video1.mp4';
 import video2 from '~/assets/videos/video2.mp4';
 import video3 from '~/assets/videos/video3.mp4';
 import video4 from '~/assets/videos/video4.mp4';
 import video5 from '~/assets/videos/video5.mp4';
+import VideoItem from './VideoItem';
 
 const cx = classNames.bind(styles);
 
@@ -44,12 +45,7 @@ function Video({ data, index }) {
                 </div>
                 <div className={cx('video-content')}>
                     <div className={cx('video')}>
-                        <ReactPlayer
-                            url={videos[index]}
-                            controls
-                            loop
-                            playIcon={<FontAwesomeIcon icon={faHeart} />}
-                        />
+                        <VideoItem index={index} videos={videos} />
                     </div>
                     <div className={cx('video-icons')}>
                         <div className={cx('btn-item')}>
@@ -78,4 +74,8 @@ function Video({ data, index }) {
     );
 }
 
+Video.propTypes = {
+    data: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+};
 export default Video;

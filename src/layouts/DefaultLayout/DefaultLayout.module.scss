@@ -9,15 +9,9 @@
     width: var(--default-layout-width);
     padding: 0 var(--default-layout-horizontal-spacer);
     margin-top: var(--default-layout-height);
-    // flex: 0.35;
-    // height: 90vh;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    display: flex;
 }
 
 .content {
-    margin-left: 356px;
-    flex: 0.65;
-    height: 90vh;
-    overflow-y: scroll;
+    margin-left: auto;
 }
