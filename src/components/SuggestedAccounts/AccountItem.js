@@ -41,7 +41,7 @@ function AccountItem({ data }) {
                                 <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                             )}
                         </p>
-                        <p className={cx('name')}>{data.full_name}</p>
+                        <p className={cx('full_name')}>{data.full_name}</p>
                     </div>
                 </div>
             </Tippy>

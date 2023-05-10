@@ -1,7 +1,8 @@
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player/youtube';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-function VideoItem({ index, videos, isInView }) {
+function VideoItem({ video_url, isInView }) {
     const [playing, setPlaying] = useState(isInView);
 
     useEffect(() => {
@@ -11,7 +12,7 @@ function VideoItem({ index, videos, isInView }) {
     return (
         <>
             <ReactPlayer
-                url={videos[index]}
+                url={video_url}
                 controls
                 loop
                 width="100%"
@@ -23,4 +24,8 @@ function VideoItem({ index, videos, isInView }) {
     );
 }
 
+VideoItem.propTypes = {
+    video_url: PropTypes.string.isRequired,
+    isInView: PropTypes.bool,
+};
 export default VideoItem;

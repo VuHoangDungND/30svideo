@@ -13,6 +13,9 @@ import {
 } from '~/components/Icons';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
 import config from '~/config';
+import LoginRec from './LoginRec';
+import Discover from './Discover';
+import FooterSB from './FooterSB';
 
 const cx = classNames.bind(styles);
 
@@ -47,12 +50,12 @@ function Sidebar() {
                             activeIcon={<LiveActiveIcon />}
                         />
                     </Menu>
+                    <LoginRec />
                     <SuggestedAccounts label="Suggested accounts" />
                     <SuggestedAccounts label="Following accounts" />
-                    <SuggestedAccounts label="Following accounts" />
+                    <Discover />
+                    <FooterSB />
                 </div>
-
-               
             </div>
         </div>
     );

@@ -34,16 +34,6 @@
     text-align: center;
 }
 // Button types
-.rounded {
-    border-radius: 999px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
-    border-color: rgba(22, 24, 35, 0.12);
-
-    &:hover {
-        border-color: rgba(22, 24, 35, 0.2);
-        background-color: rgba(22, 24, 35, 0.03);
-    }
-}
 
 .primary {
     color: var(--white);
@@ -58,19 +48,28 @@
 
 .outline {
     color: var(--primary);
-    border-color: currentColor;
+    border: 1px solid rgba(22, 24, 35, 0.12);
 
     &:hover {
-        border-color: currentColor;
-        background-color: rgba(254, 44, 85, 0.06);
+        background-color: #f8f8f8;
     }
 }
 
 .text {
-    &:hover {
-        text-decoration: underline;
-    }
     color: var(--black);
+}
+
+.hastag {
+    border-radius: 12px;
+    color: var(--text-colorsubname);
+    height: 24px;
+    margin-bottom: 12px;
+    margin-right: 8px;
+    padding: 3px 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 // Button sizes
@@ -82,4 +81,5 @@
 .large {
     padding: 14px 16px;
     min-width: 140px;
+    width: 100%;
 }
