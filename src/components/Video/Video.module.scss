@@ -1,51 +1,74 @@
 .wrapper {
     display: flex;
-    margin-right: 4rem;
-    width: 80%;
     border-bottom: 1px solid rgb(200, 200, 200);
     padding: 20px 0px;
-}
-
-.user {
-    display: flex;
-    justify-content: space-between;
-}
-
-.avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.content {
-    flex: 1;
-    margin-left: 1.2rem;
-    width: 62rem;
+    max-width: 692px;
     position: relative;
 }
 
-.header {
-    margin-right: 11.4rem;
+.avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.info {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+.content {
+    flex: 1 1 624px;
+    margin-left: 12px;
+    width: 624px;
+}
+
+.header {
+    margin-right: 114px;
 }
 
 .user {
-    font-size: 18px;
-    line-height: 25px;
-    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+
+    .user-nickname {
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 25px;
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+    .user-fullname {
+        font-weight: 300;
+        font-size: 14px;
+        display: inline-block;
+        line-height: 28px;
+    }
+}
+
+.desc {
+    font-size: 16px;
+    line-height: 22px;
+    word-break: break-word;
+    font-weight: 500;
+}
+
+.music {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+
+    .music-name {
+        display: inline-block;
+        padding-left: 10px;
+    }
 }
 
 .follow-btn {
     position: absolute;
-    top: 12px;
+    top: 28px;
     right: 0;
     min-width: 88px;
-    min-height: 28px;
+    max-height: 28px;
 }
 
 .video-content {
@@ -62,7 +85,7 @@
     margin-right: 2rem;
     height: calc(450px + ((100vw - 768px) / 1152) * 200);
     aspect-ratio: 56.25/100;
-    object-fit: contain;
+    object-fit: cover;
     position: relative;
 
     video {
@@ -77,13 +100,7 @@
     flex-direction: column;
 
     .btn-item {
-        border: none;
-        background: none;
-        outline: none;
-        padding: 0px;
-        position: relative;
         display: flex;
-        -webkit-box-align: center;
         align-items: center;
         cursor: pointer;
         flex-direction: column;
@@ -91,9 +108,7 @@
 
     .icon-wrapper {
         display: flex;
-        -webkit-box-pack: center;
         justify-content: center;
-        -webkit-box-align: center;
         align-items: center;
         width: 48px;
         height: 48px;
@@ -103,7 +118,6 @@
         background-color: rgba(22, 24, 35, 0.06);
         margin-top: 8px;
         margin-bottom: 6px;
-        color: rgb(22, 24, 35);
     }
 
     .text {

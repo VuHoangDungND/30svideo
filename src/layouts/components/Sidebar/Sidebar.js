@@ -8,6 +8,8 @@ import {
     UserGroupActiveIcon,
     LiveIcon,
     LiveActiveIcon,
+    ExploreIcon,
+    ExploreActiveIcon,
 } from '~/components/Icons';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
 import config from '~/config';
@@ -16,32 +18,43 @@ const cx = classNames.bind(styles);
 
 function Sidebar() {
     return (
-        <aside className={cx('wrapper')}>
-            <Menu>
-                <MenuItem
-                    title="For You"
-                    to={config.routes.home}
-                    icon={<HomeIcon />}
-                    activeIcon={<HomeActiveIcon />}
-                />
-                <MenuItem
-                    title="Following"
-                    to={config.routes.following}
-                    icon={<UserGroupIcon />}
-                    activeIcon={<UserGroupActiveIcon />}
-                />
-                <MenuItem
-                    title="LIVE"
-                    to={config.routes.live}
-                    icon={<LiveIcon />}
-                    activeIcon={<LiveActiveIcon />}
-                />
-            </Menu>
+        <div className={cx('wrapper')}>
+            <div className={cx('container')}>
+                <div className={cx('content')}>
+                    <Menu>
+                        <MenuItem
+                            title="For You"
+                            to={config.routes.home}
+                            icon={<HomeIcon />}
+                            activeIcon={<HomeActiveIcon />}
+                        />
+                        <MenuItem
+                            title="Following"
+                            to={config.routes.following}
+                            icon={<UserGroupIcon />}
+                            activeIcon={<UserGroupActiveIcon />}
+                        />
+                        <MenuItem
+                            title="Explore"
+                            to={config.routes.explore}
+                            icon={<ExploreIcon />}
+                            activeIcon={<ExploreActiveIcon />}
+                        />
+                        <MenuItem
+                            title="LIVE"
+                            to={config.routes.live}
+                            icon={<LiveIcon />}
+                            activeIcon={<LiveActiveIcon />}
+                        />
+                    </Menu>
+                    <SuggestedAccounts label="Suggested accounts" />
+                    <SuggestedAccounts label="Following accounts" />
+                    <SuggestedAccounts label="Following accounts" />
+                </div>
 
-            <SuggestedAccounts label="Suggested accounts" />
-            <SuggestedAccounts label="Following accounts" />
-            <SuggestedAccounts label="Following accounts" />
-        </aside>
+               
+            </div>
+        </div>
     );
 }
 

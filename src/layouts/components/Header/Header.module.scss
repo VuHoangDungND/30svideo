@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 2;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -18,7 +18,7 @@
 
 .inner {
     height: 100%;
-    width: var(--default-layout-width);
+    width: 100%;
     padding: 0 var(--default-layout-horizontal-spacer);
     display: flex;
     align-items: center;
@@ -27,11 +27,14 @@
 
 .logo-link {
     display: flex;
+    min-width: 300px;
 }
 // Actions
 .actions {
+    min-width: 280px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .more-btn {

@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+    faBookmark,
     faCircleQuestion,
     faCoins,
     faEarthAsia,
     faEllipsisVertical,
     faGear,
     faKeyboard,
+    faMoon,
     faPlus,
     faSignOut,
     faUser,
@@ -96,6 +98,10 @@ const MENU_ITEMS = [
         icon: <FontAwesomeIcon icon={faKeyboard} />,
         title: 'Keyboard shortcuts',
     },
+    {
+        icon: <FontAwesomeIcon icon={faMoon} />,
+        title: 'Dark mode',
+    },
 ];
 function Header() {
     // const currentUser = false;
@@ -120,6 +126,11 @@ function Header() {
             title: 'View profile',
             to: '/@cogaibang',
             type: 'View profile',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faBookmark} />,
+            title: 'Favorites',
+            to: '/@cogaibang',
         },
         {
             icon: <FontAwesomeIcon icon={faCoins} />,
@@ -148,7 +159,7 @@ function Header() {
                     <img src={images.logo} alt="Tiktok" />
                 </Link>
                 <Search />
-                <div className={cx('action')}>
+                <div className={cx('actions')}>
                     {currentUser ? (
                         <>
                             <Tippy delay={[0, 50]} content="Upload video" placement="bottom">

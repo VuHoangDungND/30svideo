@@ -30,6 +30,7 @@ function AccountItem({ data }) {
                 offset={[-20, 0]}
                 placement="bottom"
                 render={() => renderPreview()}
+                popperOptions={{ strategy: 'fixed' }}
             >
                 <div className={cx('account-item')}>
                     <Image className={cx('avatar')} src={data.avatar} alt="" />
