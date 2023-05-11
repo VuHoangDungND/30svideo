@@ -1,0 +1,30 @@
+.wrapper {
+    &:hover {
+        .play,
+        .sound {
+            opacity: 1;
+        }
+    }
+}
+
+// nút play và sound của video
+.play,
+.sound {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 16px;
+    color: var(--white);
+    background-color: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.play {
+    left: 12px;
+}
+
+.sound {
+    right: 12px;
+}

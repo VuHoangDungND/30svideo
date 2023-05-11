@@ -17,25 +17,34 @@ import VideoItem from './VideoItem';
 
 const cx = classNames.bind(styles);
 
-function Video({ data }) {
+function Video({ data, callback, index }) {
     const [isInView, setIsInView] = useState(false);
 
-    const ref = useRef(null);
+    const viewRef = useRef(null);
 
     // tạo biến để xem xét một object có nằm trong viewport
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsInView(entry.isIntersecting);
+                callback(
+                    viewRef.current.offsetTop + viewRef.current.offsetHeight,
+                    entry.isIntersecting,
+                    index,
+                );
             },
             { threshold: 0, rootMargin: '-49.9% 0px -49.9% 0px ' },
         );
-        observer.observe(ref.current);
-        return () => observer.disconnect();
+
+        observer.observe(viewRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
     }, []);
 
     return (
-        <div className={cx('wrapper')} ref={ref}>
+        <div className={cx('wrapper')} ref={viewRef}>
             <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
             <div className={cx('content')}>
                 <div className={cx('header')}>
@@ -43,6 +52,8 @@ function Video({ data }) {
                         <div className={cx('user-nickname')}>{data.username}</div>
                         <div className={cx('user-fullname')}>{data.full_name}</div>
                     </div>
+
+                    {/* Thông tin video */}
                     <div className={cx('desc')}>{data.desc}</div>
                     <h4 className={cx('music')}>
                         <FontAwesomeIcon icon={faMusic} />
@@ -52,10 +63,14 @@ function Video({ data }) {
                         Follow
                     </Button>
                 </div>
+
+                {/* phần video */}
                 <div className={cx('video-content')}>
                     <div className={cx('video')}>
                         <VideoItem video_url={data.video_url} isInView={isInView} />
                     </div>
+
+                    {/* icon bên phải video */}
                     <div className={cx('video-icons')}>
                         <div className={cx('btn-item')}>
                             <span className={cx('icon-wrapper')}>
