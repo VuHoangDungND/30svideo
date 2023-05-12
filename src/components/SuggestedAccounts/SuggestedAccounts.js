@@ -4,6 +4,8 @@ import styles from './SuggestedAccounts.module.scss';
 import AccountItem from './AccountItem';
 import { useEffect, useState } from 'react';
 import * as searchServices from '~/services/searchService';
+import { db } from '~/config';
+import { collection, getDocs } from 'firebase/firestore';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +14,11 @@ function SuggestedAccounts({ label }) {
 
     useEffect(() => {
         const fetchApi = async () => {
-            const rs = await searchServices.search('h');
+            const users = await getDocs(collection(db, 'videos'));
+            const rs = [];
+            users.forEach((doc) => {
+                rs.push({ ...doc.data(), id: doc.id });
+            });
 
             setResult(rs);
         };

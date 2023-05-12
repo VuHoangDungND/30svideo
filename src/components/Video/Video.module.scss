@@ -63,6 +63,7 @@
     }
 }
 
+//button following
 .follow-btn {
     position: absolute;
     top: 28px;
@@ -71,12 +72,19 @@
     max-height: 28px;
 }
 
+.follow-btn.active {
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+// thông tin video
 .video-content {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
 }
 
+//video
 .video {
     background-size: cover;
     cursor: pointer;
@@ -95,6 +103,7 @@
     }
 }
 
+//các icon bên cạnh video
 .video-icons {
     display: flex;
     flex-direction: column;

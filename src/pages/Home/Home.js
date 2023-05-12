@@ -29,28 +29,43 @@ function Home() {
 
     //di chuyển khi bấm phím
     useEffect(() => {
-        const handleNextVideo = () => {
-            console.log(list);
+        window.handleMoveToVideo = function (event) {
             let [videoPlaying] = list.filter((item) => {
                 return item.isView === true;
             });
-            console.log(videoPlaying.index, list.length);
             let nextVideo;
-            if (videoPlaying.index === list.length - 1) nextVideo = videoPlaying;
-            else {
-                [nextVideo] = list.filter((item) => {
-                    return item.index === videoPlaying.index + 1;
-                });
+            switch (event.keyCode) {
+                case 40:
+                    if (videoPlaying.index === list.length - 1) nextVideo = videoPlaying;
+                    else {
+                        [nextVideo] = list.filter((item) => {
+                            return item.index === videoPlaying.index + 1;
+                        });
+                    }
+                    break;
+                case 38:
+                    if (videoPlaying.index === 0) nextVideo = videoPlaying;
+                    else {
+                        [nextVideo] = list.filter((item) => {
+                            return item.index === videoPlaying.index - 1;
+                        });
+                    }
+                    break;
+                default:
+                    break;
             }
 
-            window.scrollTo({
-                top: nextVideo.top - window.screen.height + 60,
-                behavior: 'smooth',
-            });
+            if (nextVideo)
+                window.scrollTo({
+                    top: nextVideo.top,
+                    behavior: 'smooth',
+                });
         };
-        window.addEventListener('keyup', handleNextVideo);
+
+        window.addEventListener('keyup', window.handleMoveToVideo);
         return () => {
-            window.removeEventListener('keyup', handleNextVideo);
+            window.removeEventListener('keyup', window.handleMoveToVideo);
+            delete window.handleNextVideo;
         };
     }, [list]);
 

@@ -35,8 +35,8 @@ function AccountItem({ data }) {
                 <div className={cx('account-item')}>
                     <Image className={cx('avatar')} src={data.avatar} alt="" />
                     <div className={cx('item-info')}>
-                        <p className={cx('nickname')}>
-                            <strong>{data.nickname}</strong>
+                        <p className={cx('username')}>
+                            <strong>{data.username}</strong>
                             {data.tick && (
                                 <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                             )}

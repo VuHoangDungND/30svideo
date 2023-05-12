@@ -14,11 +14,13 @@ import {
     faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import VideoItem from './VideoItem';
+import Following from '~/pages/Following';
 
 const cx = classNames.bind(styles);
 
 function Video({ data, callback, index }) {
     const [isInView, setIsInView] = useState(false);
+    const [isFollowing, setIsFollowing] = useState(false);
 
     const viewRef = useRef(null);
 
@@ -28,7 +30,9 @@ function Video({ data, callback, index }) {
             ([entry]) => {
                 setIsInView(entry.isIntersecting);
                 callback(
-                    viewRef.current.offsetTop + viewRef.current.offsetHeight,
+                    viewRef.current.offsetTop +
+                        viewRef.current.offsetHeight -
+                        window.visualViewport.height,
                     entry.isIntersecting,
                     index,
                 );
@@ -59,8 +63,12 @@ function Video({ data, callback, index }) {
                         <FontAwesomeIcon icon={faMusic} />
                         <div className={cx('music-name')}>{data.music}</div>
                     </h4>
-                    <Button outline className={cx('follow-btn')}>
-                        Follow
+                    <Button
+                        outline
+                        className={cx('follow-btn', isFollowing ? 'active' : '')}
+                        onClick={() => setIsFollowing(!isFollowing)}
+                    >
+                        {!isFollowing ? ' Follow' : 'Following'}
                     </Button>
                 </div>
 

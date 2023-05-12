@@ -52,7 +52,6 @@ function Sidebar() {
                     </Menu>
                     <LoginRec />
                     <SuggestedAccounts label="Suggested accounts" />
-                    <SuggestedAccounts label="Following accounts" />
                     <Discover />
                     <FooterSB />
                 </div>
