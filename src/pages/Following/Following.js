@@ -4,7 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '~/config';
 import MainPage from '~/layouts/components/MainPage';
 
-function Home() {
+function Following() {
     const [videoList, setVideoList] = useState([]);
 
     //lấy dữ liệu từ firebase
@@ -24,4 +24,4 @@ function Home() {
     return <MainPage videoList={videoList} />;
 }
 
-export default Home;
+export default Following;
