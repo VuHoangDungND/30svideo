@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
-import Menu, { MenuItem } from './Menu';
+import MenuPage, { MenuItem } from './MenuPage';
 import {
     HomeIcon,
     HomeActiveIcon,
@@ -24,7 +24,7 @@ function Sidebar() {
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className={cx('content')}>
-                    <Menu>
+                    <MenuPage>
                         <MenuItem
                             title="For You"
                             to={config.routes.home}
@@ -49,7 +49,7 @@ function Sidebar() {
                             icon={<LiveIcon />}
                             activeIcon={<LiveActiveIcon />}
                         />
-                    </Menu>
+                    </MenuPage>
                     <LoginRec />
                     <SuggestedAccounts label="Suggested accounts" />
                     <Discover />

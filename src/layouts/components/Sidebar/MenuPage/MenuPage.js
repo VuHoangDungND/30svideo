@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
-function Menu({ children }) {
+function MenuPage({ children }) {
     return <nav>{children}</nav>;
 }
 
-Menu.propTypes = {
+MenuPage.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default Menu;
+export default MenuPage;

@@ -10,6 +10,8 @@ import AccountItem from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icons';
 import { useDebounce } from '~/hooks';
 import styles from './Search.module.scss';
+import { Link } from 'react-router-dom';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -94,9 +96,13 @@ function Search() {
                         </button>
                     )}
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                    <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
+                    <Link
+                        className={cx('search-btn')}
+                        onMouseDown={(e) => e.preventDefault()}
+                        to={config.routes.search}
+                    >
                         <SearchIcon />
-                    </button>
+                    </Link>
                 </div>
             </HeadlessTippy>
         </div>

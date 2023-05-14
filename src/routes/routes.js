@@ -19,7 +19,7 @@ const publicRoutes = [
     { path: config.routes.explore, component: Explore },
     { path: config.routes.profile, component: Profile },
     { path: config.routes.upload, component: Upload, layout: HeaderOnly },
-    { path: config.routes.search, component: Search, layout: null },
+    { path: config.routes.search, component: Search },
 ];
 
 const privateRoutes = [];
