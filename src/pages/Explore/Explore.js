@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { collection, endAt, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 import { db } from '~/config';
 import MainPage from '~/layouts/components/MainPage';
@@ -13,12 +13,12 @@ function Explore() {
 
             const tmp = 'Dance';
 
-            const q = query(
+            const exploreQuery = query(
                 videoRef,
                 where('music', '>=', tmp),
                 where('music', '<=', tmp + '\uf8ff'),
             );
-            const videos = await getDocs(q);
+            const videos = await getDocs(exploreQuery);
             const rs = [];
             videos.forEach((doc) => {
                 rs.push({ ...doc.data(), id: doc.id });
@@ -29,7 +29,6 @@ function Explore() {
         fetchApi();
     }, []);
 
-    console.log(videoList);
     return <MainPage videoList={videoList} />;
 }
 

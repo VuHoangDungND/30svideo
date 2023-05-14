@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+
 import Video from '~/components/Video';
 
 function MainPage({ videoList }) {
@@ -74,4 +76,7 @@ function MainPage({ videoList }) {
     );
 }
 
+MainPage.propTypes = {
+    videoList: PropTypes.array.isRequired,
+};
 export default MainPage;

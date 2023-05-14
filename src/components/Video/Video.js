@@ -3,7 +3,9 @@ import classNames from 'classnames/bind';
 import Button from '../Button';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
+import Tippy from '@tippyjs/react/headless';
 
+import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './Video.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -14,7 +16,7 @@ import {
     faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import VideoItem from './VideoItem';
-import Following from '~/pages/Following';
+import AccountPreview from '~/components/AccountPreview';
 
 const cx = classNames.bind(styles);
 
@@ -45,7 +47,18 @@ function Video({ data, callback, index }) {
         return () => {
             observer.disconnect();
         };
-    }, []);
+    }, [callback, index]);
+
+    //Render tippy
+    const renderPreview = (props) => {
+        return (
+            <div tabIndex="-1" {...props}>
+                <PopperWrapper>
+                    <AccountPreview data={data} />
+                </PopperWrapper>
+            </div>
+        );
+    };
 
     return (
         <div className={cx('wrapper')} ref={viewRef}>
@@ -53,7 +66,18 @@ function Video({ data, callback, index }) {
             <div className={cx('content')}>
                 <div className={cx('header')}>
                     <div className={cx('user')}>
-                        <div className={cx('user-nickname')}>{data.username}</div>
+                        <div>
+                            <Tippy
+                                interactive
+                                delay={[800, 0]}
+                                offset={[-20, 0]}
+                                placement="bottom"
+                                render={() => renderPreview()}
+                                popperOptions={{ strategy: 'fixed' }}
+                            >
+                                <div className={cx('user-nickname')}>{data.username}</div>
+                            </Tippy>
+                        </div>
                         <div className={cx('user-fullname')}>{data.full_name}</div>
                     </div>
 
@@ -117,5 +141,7 @@ function Video({ data, callback, index }) {
 
 Video.propTypes = {
     data: PropTypes.object.isRequired,
+    callback: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
 };
 export default Video;
