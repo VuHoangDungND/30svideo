@@ -1,0 +1,56 @@
+.wrapper {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 490px;
+    min-width: 520px;
+}
+
+.videoFeedTab {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 100%;
+    height: 44px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #efefef;
+}
+
+.videos-tab,
+.liked-tab {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    height: 44px;
+    padding: 0px 32px;
+    cursor: pointer;
+}
+
+.liked-tab {
+    span {
+        margin-left: 10px;
+    }
+}
+
+.videos-tab.active ~ .bottom-line {
+    transform: translateX(0px);
+    width: 123px;
+}
+
+.liked-tab.active ~ .bottom-line {
+    transform: translateX(123px);
+    width: 137px;
+}
+
+.bottom-line {
+    position: absolute;
+    top: 44px;
+    height: 2px;
+    background: var(--text-color);
+    transition: transform 0.3s ease 0s;
+    width: 100px;
+}

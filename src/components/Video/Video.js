@@ -10,6 +10,7 @@ import styles from './Video.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBookmark,
+    faCheckCircle,
     faComment,
     faHeart,
     faMusic,
@@ -17,6 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import VideoItem from './VideoItem';
 import AccountPreview from '~/components/AccountPreview';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -75,7 +77,10 @@ function Video({ data, callback, index }) {
                                 render={() => renderPreview()}
                                 popperOptions={{ strategy: 'fixed' }}
                             >
-                                <div className={cx('user-nickname')}>{data.username}</div>
+                                <Link to={`/@${data.full_name}`} className={cx('user-nickname')}>
+                                    {data.username}
+                                    <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
+                                </Link>
                             </Tippy>
                         </div>
                         <div className={cx('user-fullname')}>{data.full_name}</div>

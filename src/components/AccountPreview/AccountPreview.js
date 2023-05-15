@@ -18,11 +18,11 @@ function AccountPreview({ data }) {
                 </Button>
             </div>
             <div className={cx('body')}>
-                <p className={cx('username')}>
+                <div className={cx('username')}>
                     <strong>{data.username}</strong>
                     {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
-                </p>
-                <p className={cx('name')}>{data.full_name}</p>
+                </div>
+                <div className={cx('full_name')}>{data.full_name}</div>
                 <p className={cx('analytics')}>
                     <strong className={cx('value')}>{data.like} </strong>
                     <span className={cx('label')}>Followers</span>

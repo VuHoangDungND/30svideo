@@ -22,7 +22,7 @@
 
 .body {
     margin-top: 12px;
-    color: #161823;
+    color: var(--text-color);
 }
 
 .username {
@@ -35,8 +35,14 @@
     margin-left: 4px;
 }
 
-.name {
+.full_name {
     font-size: 1.4rem;
+}
+
+.username,
+.full_name,
+.header {
+    cursor: pointer;
 }
 
 .analytics {
@@ -49,5 +55,5 @@
 }
 
 .label {
-    color: #161823bf;
+    color: var(--text-color);
 }
