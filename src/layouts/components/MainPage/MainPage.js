@@ -28,6 +28,7 @@ function MainPage({ videoList }) {
     //di chuyển khi bấm phím
     useEffect(() => {
         window.handleMoveToVideo = function (event) {
+            event.preventDefault();
             let [videoPlaying] = list.current.filter((item) => {
                 return item.isView === true;
             });
