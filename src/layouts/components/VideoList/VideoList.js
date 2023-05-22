@@ -10,14 +10,14 @@ function VideoList({ data }) {
     return (
         <div className={cx('wrapper')}>
             {data.map((videoData, index) => (
-                <VideoListItem videoData={videoData} />
+                <VideoListItem key={index} videoData={videoData} />
             ))}
         </div>
     );
 }
 
 VideoList.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
 };
 
 export default VideoList;

@@ -16,7 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import config from '~/config';
 import Button from '~/components/Button';
@@ -26,6 +26,7 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
+import { USER_LOGIN, USER_LOGOUT } from '~/store/constants';
 
 const cx = classNames.bind(styles);
 
@@ -104,16 +105,17 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
-    const [currentUser, setCurrentUser] = useState(false);
+    const dispatch = useDispatch();
+    const myState = useSelector((state) => state.reducer.userInfo);
+
+    localStorage.setItem('userInfo', JSON.stringify(myState));
+
+    console.log(myState);
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
-            case 'language':
-                // Handle change language
-                console.log(menuItem.type);
-                break;
             case 'Log out':
-                setCurrentUser(false);
+                dispatch({ type: USER_LOGOUT });
                 break;
             default:
         }
@@ -123,13 +125,11 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View profile',
-            to: '/@cogaibang',
-            type: 'View profile',
+            to: myState ? `/@${myState.username}` : null,
         },
         {
             icon: <FontAwesomeIcon icon={faBookmark} />,
             title: 'Favorites',
-            to: '/@cogaibang',
         },
         {
             icon: <FontAwesomeIcon icon={faCoins} />,
@@ -159,7 +159,7 @@ function Header() {
                 </Link>
                 <Search />
                 <div className={cx('actions')}>
-                    {currentUser ? (
+                    {myState ? (
                         <>
                             <Tippy delay={[0, 50]} content="Upload video" placement="bottom">
                                 <button className={cx('action-btn')}>
@@ -184,19 +184,23 @@ function Header() {
                                 Upload
                             </Button>
                             {/* Đổi từ login sang user nhưng chưa sửa bug */}
-                            <Button primary onClick={() => setCurrentUser(true)}>
+                            <Button
+                                primary
+                                onClick={() => {
+                                    dispatch({ type: USER_LOGIN });
+                                }}
+                            >
                                 Log in
                             </Button>
                         </>
                     )}
 
-                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
-                        {currentUser ? (
+                    <Menu items={myState ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {myState ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/c490ebd26ef116eed5567badf7ed69d9~c5_100x100.jpeg?x-expires=1683565200&x-signature=RgGGTli7SefBTlt%2FIfrgh4eovI4%3D"
-                                alt="Cô gái băng"
-                                fallback="https://znews-photo.zingcdn.me/w1920/Uploaded/unvjuas/2021_09_15/152714215_535645004068138_4209176905741862427_n.jpg"
+                                src={myState.avatar}
+                                alt={myState.username}
                             />
                         ) : (
                             <button className={cx('more-btn')}>

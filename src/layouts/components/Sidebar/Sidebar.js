@@ -16,10 +16,13 @@ import config from '~/config';
 import LoginRec from './LoginRec';
 import Discover from './Discover';
 import FooterSB from './FooterSB';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 function Sidebar() {
+    const myState = useSelector((state) => state.reducer.userInfo);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
@@ -50,7 +53,7 @@ function Sidebar() {
                             activeIcon={<LiveActiveIcon />}
                         />
                     </MenuPage>
-                    <LoginRec />
+                    {myState ? null : <LoginRec />}
                     <SuggestedAccounts label="Suggested accounts" />
                     <Discover />
                     <FooterSB />

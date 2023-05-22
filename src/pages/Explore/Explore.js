@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import { db } from '~/config';
 import MainPage from '~/layouts/components/MainPage';
