@@ -28,6 +28,12 @@
 .logo-link {
     display: flex;
     min-width: 300px;
+
+    img {
+        width: 224px;
+        height: 60px;
+        object-fit: cover;
+    }
 }
 // Actions
 .actions {

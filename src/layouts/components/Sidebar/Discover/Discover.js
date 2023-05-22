@@ -13,52 +13,39 @@ function Discover() {
             <ul className={cx('list')}>
                 <li className={cx('item')}>
                     <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
-                        <p>suthatla</p>
+                        <p>Âm nhạc</p>
                     </Button>
                 </li>
                 <li className={cx('item')}>
                     <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
-                        <p>mackedoi</p>
+                        <p>Trò chơi</p>
                     </Button>
                 </li>
                 <li className={cx('item')}>
                     <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
-                        <p>sansangthaydoi</p>
-                    </Button>
-                </li>
-                <li className={cx('item')}>
-                    <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faMusic} />}>
-                        <p>Yêu Đơn Phương Là Gì (MEE Remix) - Mee Media</p>
-                    </Button>
-                </li>
-                <li className={cx('item')}>
-                    <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faMusic} />}>
-                        <p>Thiên Thần Tình Yêu - RICKYSTAR and T.R.I</p>
-                    </Button>
-                </li>
-                <li className={cx('item')}>
-                    <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faMusic} />}>
-                        <p>Anh Yêu Vội Thế (Mee Remix) - LaLa Trần, Mee</p>
+                        <p>Tin tức</p>
                     </Button>
                 </li>
                 <li className={cx('item')}>
                     <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
-                        <p>7749hieuung</p>
-                    </Button>
-                </li>
-                <li className={cx('item')}>
-                    <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faHashtag} />}>
-                        <p>genzlife</p>
+                        <p>Thế giới tự nhiên</p>
                     </Button>
                 </li>
                 <li className={cx('item')}>
                     <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faMusic} />}>
-                        <p>Vui Lắm Nha (TikTok Remix 1) - Hương Ly & Jombie</p>
+                        <p>Tam Bái Hồng Trần Lương [三拜红尘凉] - Doãn Tích Miên [尹昔眠]</p>
                     </Button>
                 </li>
                 <li className={cx('item')}>
                     <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faMusic} />}>
-                        <p>Con Bướm Xuân (Remix) - Cukak & H2K & BHMedia</p>
+                        <p>PHƯƠNG MỸ CHI x DTAP - VŨ TRỤ CÓ ANH ft. Pháo</p>
+                    </Button>
+                </li>
+                <li className={cx('item')}>
+                    <Button text outline hastag leftIcon={<FontAwesomeIcon icon={faMusic} />}>
+                        <p>
+                            MỘT NGÀY CHẲNG NẮNG (Official MV) | Pháo Northside x @thobaymauofficial
+                        </p>
                     </Button>
                 </li>
             </ul>

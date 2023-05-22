@@ -110,10 +110,8 @@ function Header() {
 
     localStorage.setItem('userInfo', JSON.stringify(myState));
 
-    console.log(myState);
-
     const handleMenuChange = (menuItem) => {
-        switch (menuItem.type) {
+        switch (menuItem.title) {
             case 'Log out':
                 dispatch({ type: USER_LOGOUT });
                 break;
@@ -146,7 +144,6 @@ function Header() {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
             to: config.routes.home,
-            type: 'Log out',
             separate: true,
         },
     ];
@@ -183,7 +180,7 @@ function Header() {
                             <Button text outline leftIcon={<FontAwesomeIcon icon={faPlus} />}>
                                 Upload
                             </Button>
-                            {/* Đổi từ login sang user nhưng chưa sửa bug */}
+
                             <Button
                                 primary
                                 onClick={() => {
