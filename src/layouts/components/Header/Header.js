@@ -26,7 +26,7 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
-import { USER_LOGIN, USER_LOGOUT } from '~/store/constants';
+import { USER_LOGOUT } from '~/store/constants';
 
 const cx = classNames.bind(styles);
 
@@ -152,7 +152,7 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <Link to={config.routes.home} className={cx('logo-link')}>
-                    <img src={images.logo} alt="Tiktok" />
+                    <img src={images.logo} alt="30sVideo" />
                 </Link>
                 <Search />
                 <div className={cx('actions')}>
@@ -181,12 +181,7 @@ function Header() {
                                 Upload
                             </Button>
 
-                            <Button
-                                primary
-                                onClick={() => {
-                                    dispatch({ type: USER_LOGIN });
-                                }}
-                            >
+                            <Button primary to={config.routes.login}>
                                 Log in
                             </Button>
                         </>

@@ -24,7 +24,7 @@ function GetApp() {
 
     return (
         <div className={cx('wrapper', upIcon ? 'active' : '')}>
-            <Button hastag outline text>
+            <Button hastag outline>
                 GetApp
             </Button>
 

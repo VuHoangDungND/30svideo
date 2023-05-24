@@ -1,0 +1,78 @@
+.wrapper {
+    height: 100vh;
+    background: center top no-repeat url(../../../../public/login.jpg);
+    font-size: 24px;
+}
+
+.btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.login-box {
+    position: absolute;
+    min-height: 500px;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: #ebf0f3;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+
+    h1 {
+        margin-bottom: 24px;
+    }
+}
+
+.user-box {
+    position: relative;
+}
+
+.user-box input {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--black);
+    background: transparent;
+}
+
+.user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--black);
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.user-box input:focus ~ label,
+.user-box input:valid ~ label {
+    top: -16px;
+    left: 0;
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.btn {
+    position: absolute;
+    padding: 8px 20px;
+    margin: 24px 0 9px 0;
+    cursor: pointer;
+}
+
+.btn-create {
+    background-color: transparent;
+    border: 1px solid var(--black);
+    left: 40px;
+
+    &:hover {
+        color: var(--primary);
+    }
+}
+
+.btn-login {
+    right: 40px;
+}
