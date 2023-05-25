@@ -54,7 +54,8 @@ function Sidebar() {
                         />
                     </MenuPage>
                     {myState ? null : <LoginRec />}
-                    <SuggestedAccounts label="Suggested accounts" />
+                    {myState ? <SuggestedAccounts label="Suggested accounts" /> : null}
+
                     <Discover />
                     <FooterSB />
                 </div>

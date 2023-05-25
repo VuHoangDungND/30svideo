@@ -13,9 +13,10 @@ function LoginForm() {
         <div className={cx('wrapper')}>
             <div>
                 <Button
-                    to={config.routes.home}
+                    primary
                     leftIcon={<FontAwesomeIcon icon={faArrowAltCircleLeft} />}
                     className={cx('btn-back')}
+                    to={config.routes.home}
                 >
                     Back to home
                 </Button>

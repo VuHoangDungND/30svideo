@@ -13,7 +13,7 @@ import {
     faSignOut,
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -107,6 +107,7 @@ const MENU_ITEMS = [
 function Header() {
     const dispatch = useDispatch();
     const myState = useSelector((state) => state.reducer.userInfo);
+    const navigate = useNavigate();
 
     localStorage.setItem('userInfo', JSON.stringify(myState));
 
@@ -159,7 +160,10 @@ function Header() {
                     {myState ? (
                         <>
                             <Tippy delay={[0, 50]} content="Upload video" placement="bottom">
-                                <button className={cx('action-btn')}>
+                                <button
+                                    className={cx('action-btn')}
+                                    onClick={() => navigate(config.routes.upload)}
+                                >
                                     <UploadIcon />
                                 </button>
                             </Tippy>
@@ -177,7 +181,12 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button text outline leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                            <Button
+                                text
+                                outline
+                                leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                                onClick={() => alert('Please login before uploading your video')}
+                            >
                                 Upload
                             </Button>
 

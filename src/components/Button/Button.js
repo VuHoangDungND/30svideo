@@ -68,7 +68,6 @@ Button.propTypes = {
     href: PropTypes.string,
     primary: PropTypes.bool,
     outline: PropTypes.bool,
-    text: PropTypes.bool,
     hastag: PropTypes.bool,
     disabled: PropTypes.bool,
     small: PropTypes.bool,
