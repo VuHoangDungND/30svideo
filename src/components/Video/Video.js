@@ -77,7 +77,10 @@ function Video({ data, callback, index }) {
                                 render={() => renderPreview()}
                                 popperOptions={{ strategy: 'fixed' }}
                             >
-                                <Link to={`/@${data.full_name}`} className={cx('user-nickname')}>
+                                <Link
+                                    to={`/user/@${data.full_name}`}
+                                    className={cx('user-nickname')}
+                                >
                                     {data.username}
                                     <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                                 </Link>

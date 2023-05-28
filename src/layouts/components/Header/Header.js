@@ -124,7 +124,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View profile',
-            to: myState ? `/@${myState.username}` : null,
+            to: myState ? `/user/@${myState.username}` : null,
         },
         {
             icon: <FontAwesomeIcon icon={faBookmark} />,
