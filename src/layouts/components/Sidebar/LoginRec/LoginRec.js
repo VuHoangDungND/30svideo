@@ -1,13 +1,14 @@
 import classNames from 'classnames/bind';
-import { useDispatch } from 'react-redux';
+
 import Button from '~/components/Button';
-import { USER_LOGIN } from '~/store/constants';
 import styles from './LoginRec.module.scss';
+import config from '~/config';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function LoginRec() {
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
     return (
         <div className={cx('wrapper')}>
             <p className={cx('text')}>Sign in to experience many attractive features.</p>
@@ -15,7 +16,7 @@ function LoginRec() {
                 outline
                 large
                 className={cx('btn')}
-                onClick={() => dispatch({ type: USER_LOGIN })}
+                onClick={() => navigate(config.routes.login)}
             >
                 Login
             </Button>

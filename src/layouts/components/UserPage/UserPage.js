@@ -3,30 +3,43 @@ import classNames from 'classnames/bind';
 import { faCheckCircle, faEllipsis, faShare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from '~/components/Image';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
+import * as showService from '~/services/showService';
 import styles from './UserPage.module.scss';
 import Button from '~/components/Button';
 import UserVideos from '../UserVideos';
 
 const cx = classNames.bind(styles);
 function UserPage() {
+    const [userData, setUserData] = useState({});
+    let location = useLocation().pathname.split('/');
+    let id_user = location[2].slice(1);
+
+    //lấy dữ liệu dựa trên nickname
+    useEffect(() => {
+        const fetchApi = async () => {
+            const data = await showService.showUserProfile(id_user);
+            setUserData(data[0]);
+        };
+        fetchApi();
+    }, [id_user]);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
                 <div className={cx('header')}>
                     <div className={cx('user-info')}>
-                        <Image
-                            className={cx('avatar')}
-                            src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/c0e5acb353efad347ae0ba5a87574f1d~c5_100x100.jpeg?x-expires=1684332000&x-signature=d1WRoB94hOfvU6T8M0R5ebDHf8o%3D"
-                        />
+                        <Image className={cx('avatar')} src={userData.avatar} />
 
                         <div className={cx('titleContainer')}>
-                            <div className={cx('username')}>
-                                videosmeme07
+                            <div className={cx('nickname')}>
+                                {userData.nickname}
                                 <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                             </div>
 
-                            <div className={cx('full_name')}> Độc lạ MEME</div>
+                            <div className={cx('full_name')}> {userData.full_name}</div>
                             <Button primary className={cx('follow-btn')}>
                                 Follow
                             </Button>
@@ -46,11 +59,11 @@ function UserPage() {
 
                         <div className={cx('number')}>
                             <strong className={cx('value')}>1.6M</strong>
-                            <span className={cx('label')}>Likes</span>
+                            <span className={cx('label')}> Likes</span>
                         </div>
                     </div>
 
-                    <div className={cx('bio')}>No bio yet.</div>
+                    <div className={cx('bio')}>{userData.bio}</div>
 
                     <div className={cx('share-btn')}>
                         <FontAwesomeIcon icon={faShare} />
@@ -61,7 +74,7 @@ function UserPage() {
                     </div>
                 </div>
             </div>
-            <UserVideos />
+            <UserVideos id_user={userData.id_user} />
         </div>
     );
 }

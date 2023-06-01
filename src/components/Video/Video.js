@@ -81,7 +81,7 @@ function Video({ data, callback, index }) {
                                     to={`/user/@${data.full_name}`}
                                     className={cx('user-nickname')}
                                 >
-                                    {data.username}
+                                    {data.nickname}
                                     <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                                 </Link>
                             </Tippy>
@@ -90,7 +90,7 @@ function Video({ data, callback, index }) {
                     </div>
 
                     {/* Thông tin video */}
-                    <div className={cx('desc')}>{data.desc}</div>
+                    <div className={cx('desc')}>{data.description}</div>
                     <h4 className={cx('music')}>
                         <FontAwesomeIcon icon={faMusic} />
                         <div className={cx('music-name')}>{data.music}</div>

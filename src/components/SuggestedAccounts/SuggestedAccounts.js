@@ -1,31 +1,22 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { collection, getDocs, query, limit } from 'firebase/firestore';
+import * as showService from '~/services/showService';
 
 import styles from './SuggestedAccounts.module.scss';
-import { db } from '~/config';
 import Account from './Account';
 
 const cx = classNames.bind(styles);
-
 function SuggestedAccounts({ label }) {
     const [result, setResult] = useState([]);
-    const [limited, setLimited] = useState(5);
+    const [limited, setLimited] = useState(true);
 
     //render dữ liệu
     useEffect(() => {
         const fetchApi = async () => {
-            const videosRef = collection(db, 'videos');
+            const data = await showService.showSuggestAccount(limited ? 'less' : 'more');
 
-            const videosQuery = query(videosRef, limit(limited));
-            const users = await getDocs(videosQuery);
-            const rs = [];
-            users.forEach((doc) => {
-                rs.push({ ...doc.data(), id: doc.id });
-            });
-
-            setResult(rs);
+            setResult(data);
         };
         fetchApi();
     }, [limited]);
@@ -33,16 +24,16 @@ function SuggestedAccounts({ label }) {
     return (
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>
-            {result.map((result) => (
-                <Account key={result.id} data={result} />
+            {result.map((result, index) => (
+                <Account key={index} data={result} />
             ))}
             {/* nút bật tắt all list account */}
-            {limited === 5 ? (
-                <p className={cx('more-btn')} onClick={() => setLimited(20)}>
-                    See all
+            {limited ? (
+                <p className={cx('more-btn')} onClick={() => setLimited(false)}>
+                    See more
                 </p>
             ) : (
-                <p className={cx('more-btn')} onClick={() => setLimited(5)}>
+                <p className={cx('more-btn')} onClick={() => setLimited(true)}>
                     See less
                 </p>
             )}

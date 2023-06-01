@@ -13,7 +13,7 @@ function VideoListItem({ videoData }) {
                 <ReactPlayer url={videoData.video_url} width="191px" />
             </div>
             <div className={cx('desc')}>
-                <span>{videoData.desc}</span>
+                <span>{videoData.description}</span>
             </div>
         </div>
     );

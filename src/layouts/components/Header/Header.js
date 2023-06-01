@@ -107,9 +107,8 @@ const MENU_ITEMS = [
 function Header() {
     const dispatch = useDispatch();
     const myState = useSelector((state) => state.reducer.userInfo);
-    const navigate = useNavigate();
 
-    localStorage.setItem('userInfo', JSON.stringify(myState));
+    const navigate = useNavigate();
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.title) {
@@ -124,7 +123,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View profile',
-            to: myState ? `/user/@${myState.username}` : null,
+            to: myState ? `/user/@${myState.id_user}` : null,
         },
         {
             icon: <FontAwesomeIcon icon={faBookmark} />,
@@ -201,7 +200,7 @@ function Header() {
                             <Image
                                 className={cx('user-avatar')}
                                 src={myState.avatar}
-                                alt={myState.username}
+                                alt={myState.id_user}
                             />
                         ) : (
                             <button className={cx('more-btn')}>

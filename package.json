@@ -1,5 +1,5 @@
 {
-    "name": "tiktok",
+    "name": "30svideo",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -15,8 +15,6 @@
         "@tippyjs/react": "^4.2.6",
         "axios": "^1.4.0",
         "classnames": "^2.3.2",
-        "firebase": "^9.21.0",
-        "firebase-tools": "^11.30.0",
         "normalize.css": "^8.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -51,7 +49,11 @@
             "last 1 safari version"
         ]
     },
+    "overrides": {
+        "@svgr/webpack": "$@svgr/webpack"
+    },
     "devDependencies": {
+        "@svgr/webpack": "^8.0.1",
         "babel-plugin-module-resolver": "^5.0.0",
         "customize-cra": "^1.0.0",
         "react-app-rewired": "^2.2.1",

@@ -1,31 +1,26 @@
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { db } from '~/config';
 import VideoList from '../VideoList';
+import * as showService from '~/services/showService';
 
 import styles from './UserVideos.module.scss';
 
 const cx = classNames.bind(styles);
-function UserVideos() {
+function UserVideos({ id_user }) {
     const [videosTab, setVideosTab] = useState(true);
     const [myvideoList, setMyVideoList] = useState([]);
 
-    //lấy dữ liệu từ firebase
+    //lấy dữ liệu dựa trên nick name
     useEffect(() => {
         const fetchApi = async () => {
-            const videos = await getDocs(collection(db, 'videos'));
-            const rs = [];
-            videos.forEach((doc) => {
-                rs.push({ ...doc.data(), id: doc.id });
-            });
+            const data = await showService.showVideos(id_user);
 
-            setMyVideoList(rs);
+            setMyVideoList(data);
         };
         fetchApi();
-    }, []);
+    }, [id_user]);
 
     const handleVideosTab = () => {
         setVideosTab(true);

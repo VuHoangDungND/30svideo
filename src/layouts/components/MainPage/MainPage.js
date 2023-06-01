@@ -71,7 +71,7 @@ function MainPage({ videoList }) {
     return (
         <>
             {videoList.map((result, index) => (
-                <Video data={result} key={result.id} callback={handlePushList} index={index} />
+                <Video data={result} key={index} callback={handlePushList} index={index} />
             ))}
         </>
     );

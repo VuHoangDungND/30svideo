@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-
-import { db } from '~/config';
+import * as showService from '~/services/showService';
 import MainPage from '~/layouts/components/MainPage';
 
 function Home() {
     const [videoList, setVideoList] = useState([]);
 
-    //lấy dữ liệu từ firebase
+    //lấy dữ liệu từ mysql
+
     useEffect(() => {
         const fetchApi = async () => {
-            const videos = await getDocs(collection(db, 'videos'));
-            const rs = [];
-            videos.forEach((doc) => {
-                rs.push({ ...doc.data(), id: doc.id });
-            });
-
-            setVideoList(rs);
+            const data = await showService.showHome();
+            setVideoList(data);
         };
+
         fetchApi();
     }, []);
 

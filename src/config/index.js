@@ -5,5 +5,3 @@ const config = {
 };
 
 export default config;
-
-export { db } from './firebase';

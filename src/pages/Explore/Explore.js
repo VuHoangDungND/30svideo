@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import * as showService from '~/services/showService';
 
-import { db } from '~/config';
 import MainPage from '~/layouts/components/MainPage';
 function Explore() {
     const [videoList, setVideoList] = useState([]);
@@ -9,22 +8,9 @@ function Explore() {
     //lấy dữ liệu từ firebase
     useEffect(() => {
         const fetchApi = async () => {
-            const videoRef = collection(db, 'videos');
+            const data = await showService.showHome('/');
 
-            const tmp = 'Dance';
-
-            const exploreQuery = query(
-                videoRef,
-                where('music', '>=', tmp),
-                where('music', '<=', tmp + '\uf8ff'),
-            );
-            const videos = await getDocs(exploreQuery);
-            const rs = [];
-            videos.forEach((doc) => {
-                rs.push({ ...doc.data(), id: doc.id });
-            });
-
-            setVideoList(rs);
+            setVideoList(data);
         };
         fetchApi();
     }, []);
