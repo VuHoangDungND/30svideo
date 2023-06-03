@@ -1,7 +1,6 @@
 .wrapper {
     height: 100vh;
     background: center top no-repeat url(../../../../public/login.jpg);
-    font-size: 24px;
 }
 
 .btn-back {
@@ -21,14 +20,19 @@
     background: #ebf0f3;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
     border-radius: 10px;
+}
 
-    h1 {
-        margin-bottom: 24px;
-    }
+.title {
+    margin-bottom: 24px;
+    font-size: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-box {
     position: relative;
+    font-size: 24px;
 }
 
 .user-box input {
@@ -56,23 +60,53 @@
     font-size: 16px;
 }
 
-.btn {
-    position: absolute;
-    padding: 8px 20px;
-    margin: 24px 0 9px 0;
-    cursor: pointer;
-}
-
-.btn-create {
-    background-color: transparent;
-    border: 1px solid var(--black);
-    left: 40px;
+.forgot {
+    display: flex;
+    justify-content: flex-end;
+    line-height: 0.75;
 
     &:hover {
-        color: var(--primary);
+        text-decoration: underline var(--black);
     }
 }
 
-.btn-login {
-    right: 40px;
+.btn {
+    width: 100%;
+    padding: 8px 20px;
+    cursor: pointer;
+}
+
+.social-message {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.line {
+    height: 1px;
+    flex: 1;
+    background-color: var(--black);
+}
+
+.message {
+    padding: 0 16px 0 16px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 16px 0 16px;
+}
+
+.icon {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.signup {
+    text-align: center;
+    padding-top: 24px;
+    line-height: 1rem;
+    color: rgba(156, 163, 175, 1);
 }

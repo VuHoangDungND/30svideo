@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import * as loginService from '~/services/loginService';
@@ -10,6 +10,13 @@ import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './LoginForm.module.scss';
 import { USER_LOGIN } from '~/store/constants';
+import {
+    faFacebook,
+    faGithub,
+    faGoogle,
+    faInstagram,
+    faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -63,18 +70,17 @@ function LoginForm() {
                 </Button>
             </div>
             <div className={cx('login-box')}>
-                <div>Wellcome Back! </div>
-                <h1>Login</h1>
+                <p className={cx('title')}>Login</p>
+
                 <form onSubmit={handleLogin}>
                     <div className={cx('user-box')}>
                         <input
                             type="text"
                             name="username"
-                            id="username"
                             required
                             value={data.username}
                             onChange={handleChange}
-                            autoComplete="username"
+                            autoComplete="off"
                         />
                         <label>Username</label>
                     </div>
@@ -83,24 +89,44 @@ function LoginForm() {
                         <input
                             type="password"
                             name="password"
-                            id="current-password"
                             required
                             value={data.password}
                             onChange={handleChange}
-                            autoComplete="current-password"
+                            autoComplete="off"
                         />
                         <label>Password</label>
                     </div>
 
-                    <Button to={config.routes.register} className={cx('btn', 'btn-create')}>
-                        {' '}
-                        Create account ?
-                    </Button>
+                    <div className={cx('forgot')}>
+                        <a href="/"> Forgot Password?</a>
+                    </div>
 
-                    <Button type="submit" primary className={cx('btn', 'btn-login')}>
-                        Login
+                    <Button type="submit" primary className={cx('btn')}>
+                        Sign in
                     </Button>
                 </form>
+
+                <div className={cx('social-message')}>
+                    <div className={cx('line')}></div>
+                    <p className={cx('message')}> Login with social accounts</p>
+                    <div className={cx('line')}></div>
+                </div>
+
+                <div className={cx('social-icons')}>
+                    <FontAwesomeIcon icon={faFacebook} className={cx('icon')} />
+                    <FontAwesomeIcon icon={faTwitter} className={cx('icon')} />
+                    <FontAwesomeIcon icon={faGoogle} className={cx('icon')} />
+                    <FontAwesomeIcon icon={faGithub} className={cx('icon')} />
+                    <FontAwesomeIcon icon={faInstagram} className={cx('icon')} />
+                </div>
+
+                <p className={cx('signup')}>
+                    {' '}
+                    Don't have an account?
+                    <Link to={config.routes.register} className={cx('btn-signup')}>
+                        Sign up
+                    </Link>
+                </p>
             </div>
         </div>
     );
