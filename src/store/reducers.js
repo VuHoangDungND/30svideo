@@ -1,27 +1,37 @@
-import { USER_LOGIN, USER_LOGOUT } from './constants';
-
 //initial state
 
 const initstate = {
-    userInfo: null,
+    token: null,
+    volume: '0',
+    theme: 'white',
+    modalLogin: false,
 };
 
-const userReducer = (state = initstate, action) => {
+const localState = localStorage.getItem('user') || initstate;
+
+const reducers = (state = localState, action) => {
     switch (action.type) {
-        case USER_LOGIN:
+        case 'SET_VOLUME':
             return {
                 ...state,
-                userInfo: action.data,
+                volume: action.payload,
             };
 
-        case USER_LOGOUT:
+        case 'SET_THEME':
             return {
                 ...state,
-                userInfo: null,
+                theme: action.payload,
             };
+
+        case 'SET_MODAL-LOGIN':
+            return {
+                ...state,
+                modalLogin: action.payload,
+            };
+
         default:
             return state;
     }
 };
 
-export default userReducer;
+export default reducers;

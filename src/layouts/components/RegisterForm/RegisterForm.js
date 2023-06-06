@@ -1,8 +1,10 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as registerService from '~/services/registerService';
 import Button from '~/components/Button';
 import config from '~/config';
 import styles from './RegisterForm.module.scss';
@@ -12,7 +14,6 @@ import {
     faInfoCircle,
     faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-
 const cx = classNames.bind(styles);
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -29,6 +30,28 @@ function RegisterForm() {
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
+
+    const navigate = useNavigate();
+
+    //button register
+    const handleRegister = (e) => {
+        e.preventDefault();
+        const userData = {
+            username: user,
+            password: pwd,
+        };
+
+        const fetchApi = async () => {
+            const res = await registerService.register(userData);
+            if (res.data === null) alert(res.message);
+            else {
+                navigate(config.routes.login);
+                alert(res.message);
+            }
+        };
+
+        fetchApi();
+    };
 
     // check name match with REGEX
     useEffect(() => {
@@ -57,7 +80,7 @@ function RegisterForm() {
             <div className={cx('register-box')}>
                 <p className={cx('title')}>Register</p>
 
-                <form>
+                <form onSubmit={handleRegister}>
                     {/* username */}
                     <div className={cx('user-box')}>
                         <input

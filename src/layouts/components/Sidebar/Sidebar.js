@@ -6,8 +6,6 @@ import {
     HomeActiveIcon,
     UserGroupIcon,
     UserGroupActiveIcon,
-    LiveIcon,
-    LiveActiveIcon,
     ExploreIcon,
     ExploreActiveIcon,
 } from '~/components/Icons';
@@ -45,12 +43,6 @@ function Sidebar() {
                             to={config.routes.explore}
                             icon={<ExploreIcon />}
                             activeIcon={<ExploreActiveIcon />}
-                        />
-                        <MenuItem
-                            title="LIVE"
-                            to={config.routes.live}
-                            icon={<LiveIcon />}
-                            activeIcon={<LiveActiveIcon />}
                         />
                     </MenuPage>
                     {myState ? null : <LoginRec />}

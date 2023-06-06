@@ -26,7 +26,6 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
-import { USER_LOGOUT } from '~/store/constants';
 
 const cx = classNames.bind(styles);
 
@@ -113,7 +112,6 @@ function Header() {
     const handleMenuChange = (menuItem) => {
         switch (menuItem.title) {
             case 'Log out':
-                dispatch({ type: USER_LOGOUT });
                 break;
             default:
         }

@@ -1,20 +1,21 @@
 .wrapper {
     width: 100%;
     &:hover {
-        .play,
-        .sound {
+        .icon-play,
+        .icon-sound,
+        .input-volume {
             opacity: 1;
         }
     }
 }
 
 // nút play và sound của video
-.play,
-.sound {
+.icon-play,
+.icon-sound {
     width: 30px;
     height: 30px;
-    position: absolute;
     bottom: 16px;
+    position: absolute;
     color: var(--white);
     background-color: transparent;
     font-size: 20px;
@@ -22,10 +23,23 @@
     opacity: 0;
 }
 
-.play {
+.icon-play {
     left: 12px;
 }
 
-.sound {
+.icon-sound {
     right: 12px;
+}
+
+//thanh điều khiển âm thanh
+
+.input-volume {
+    width: 30px;
+    height: 60px;
+    position: absolute;
+    bottom: 46px;
+    right: 16px;
+    background-color: transparent;
+    appearance: slider-vertical;
+    opacity: 0;
 }

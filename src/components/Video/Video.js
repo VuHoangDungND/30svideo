@@ -9,9 +9,9 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './Video.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faBookmark,
     faCheckCircle,
     faComment,
+    faDownload,
     faHeart,
     faMusic,
     faShare,
@@ -19,6 +19,14 @@ import {
 import VideoItem from './VideoItem';
 import AccountPreview from '~/components/AccountPreview';
 import { Link } from 'react-router-dom';
+import {
+    faEmber,
+    faFacebook,
+    faGoogle,
+    faInstagram,
+    faTwitch,
+} from '@fortawesome/free-brands-svg-icons';
+import Menu from '../Popper/Menu';
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +35,33 @@ function Video({ data, callback, index }) {
     const [isFollowing, setIsFollowing] = useState(false);
 
     const viewRef = useRef(null);
+
+    const shareMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faEmber} />,
+            title: 'Embedded',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faFacebook} />,
+            title: 'Share to Facebook',
+            to: 'https://www.facebook.com/',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faTwitch} />,
+            title: 'Share to Twitter',
+            to: 'https://twitter.com/',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGoogle} />,
+            title: 'Share to Google',
+            to: 'https://google.com/',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faInstagram} />,
+            title: 'Share to Instagram',
+            to: 'https://instagram.com/',
+        },
+    ];
 
     // tạo biến để xem xét một object có nằm trong viewport
     useEffect(() => {
@@ -128,16 +163,19 @@ function Video({ data, callback, index }) {
 
                         <div className={cx('btn-item')}>
                             <span className={cx('icon-wrapper')}>
-                                <FontAwesomeIcon icon={faBookmark} className={cx('icon')} />
+                                <FontAwesomeIcon icon={faDownload} className={cx('icon')} />
                             </span>
 
-                            <span className={cx('text')}>{data.bookmark}</span>
+                            <span className={cx('text')}>{data.download}</span>
                         </div>
 
                         <div className={cx('btn-item')}>
-                            <span className={cx('icon-wrapper')}>
-                                <FontAwesomeIcon icon={faShare} className={cx('icon')} />
-                            </span>
+                            <Menu items={shareMenu} placement="right-start">
+                                <span className={cx('icon-wrapper')}>
+                                    <FontAwesomeIcon icon={faShare} className={cx('icon')} />
+                                </span>
+                            </Menu>
+
                             <span className={cx('text')}>{data.share}</span>
                         </div>
                     </div>

@@ -12,7 +12,13 @@ const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
 
-function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn }) {
+function Menu({
+    children,
+    items = [],
+    hideOnClick = false,
+    onChange = defaultFn,
+    placement = 'bottom-end',
+}) {
     const [history, setHistory] = useState([{ data: items }]);
 
     useEffect(() => {
@@ -60,17 +66,19 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
         setHistory((prev) => prev.slice(0, 1));
     };
     return (
-        <Tippy
-            interactive
-            delay={[0, 700]}
-            offset={[12, 8]}
-            hideOnClick={hideOnClick}
-            placement="bottom-end"
-            render={renderResult}
-            onHide={handleReset}
-        >
-            {children}
-        </Tippy>
+        <div>
+            <Tippy
+                interactive
+                delay={[0, 700]}
+                offset={[12, 8]}
+                hideOnClick={hideOnClick}
+                placement={placement}
+                render={renderResult}
+                onHide={handleReset}
+            >
+                {children}
+            </Tippy>
+        </div>
     );
 }
 
@@ -78,6 +86,7 @@ Menu.propTypes = {
     children: PropTypes.node.isRequired,
     items: PropTypes.array,
     hideOnClick: PropTypes.bool,
+    placement: PropTypes.string,
     onChange: PropTypes.func,
 };
 

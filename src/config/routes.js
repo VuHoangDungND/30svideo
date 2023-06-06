@@ -3,7 +3,6 @@ const routes = {
     following: '/following',
     upload: '/upload',
     search: '/search',
-    live: '/live',
     explore: '/explore',
     login: '/user/login',
     register: '/user/register',

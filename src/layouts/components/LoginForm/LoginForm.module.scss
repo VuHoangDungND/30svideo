@@ -1,6 +1,5 @@
 .wrapper {
     height: 100vh;
-    background: center top no-repeat url(../../../../public/login.jpg);
 }
 
 .btn-back {
@@ -64,6 +63,7 @@
     display: flex;
     justify-content: flex-end;
     line-height: 0.75;
+    margin-bottom: 12px;
 
     &:hover {
         text-decoration: underline var(--black);

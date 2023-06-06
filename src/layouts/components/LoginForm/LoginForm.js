@@ -9,7 +9,6 @@ import config from '~/config';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './LoginForm.module.scss';
-import { USER_LOGIN } from '~/store/constants';
 import {
     faFacebook,
     faGithub,
@@ -40,7 +39,6 @@ function LoginForm() {
             const res = await loginService.login(userData);
             if (res.data === null) alert(res.message);
             else {
-                dispatch({ type: USER_LOGIN, data: res.data[0] });
                 navigate(config.routes.home);
                 alert(res.message);
             }

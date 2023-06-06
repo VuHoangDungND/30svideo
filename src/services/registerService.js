@@ -1,8 +1,8 @@
 import * as httpRequest from '../utils/httpRequest';
 
-export const login = async (userData) => {
+export const register = async (userData) => {
     try {
-        const res = await httpRequest.post(`/auth/login`, userData);
+        const res = await httpRequest.post(`/auth/register`, userData);
         return res;
     } catch (error) {
         console.log(error);
