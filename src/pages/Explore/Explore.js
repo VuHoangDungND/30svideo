@@ -8,9 +8,9 @@ function Explore() {
     //lấy dữ liệu từ firebase
     useEffect(() => {
         const fetchApi = async () => {
-            const data = await showService.showHome('/');
+            const res = await showService.showHome('/');
 
-            setVideoList(data);
+            setVideoList(res.data.data);
         };
         fetchApi();
     }, []);

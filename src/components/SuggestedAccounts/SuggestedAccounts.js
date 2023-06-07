@@ -14,9 +14,8 @@ function SuggestedAccounts({ label }) {
     //render dữ liệu
     useEffect(() => {
         const fetchApi = async () => {
-            const data = await showService.showSuggestAccount(limited ? 'less' : 'more');
-
-            setResult(data);
+            const res = await showService.showSuggestAccount(limited ? 'less' : 'more');
+            setResult(res.data.data);
         };
         fetchApi();
     }, [limited]);

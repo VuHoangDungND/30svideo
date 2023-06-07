@@ -3,7 +3,7 @@ import * as httpRequest from '../utils/httpRequest';
 export const showHome = async () => {
     try {
         const res = await httpRequest.get('/');
-        return res.data;
+        return res;
     } catch (error) {
         console.log(error);
     }
@@ -16,7 +16,18 @@ export const showSuggestAccount = async (type) => {
                 type,
             },
         });
-        return res.data;
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const showMyUser = async (token) => {
+    try {
+        const res = await httpRequest.get(`/user`, {
+            headers: { Authorization: 'Bearer ' + token },
+        });
+        return res;
     } catch (error) {
         console.log(error);
     }
@@ -29,7 +40,7 @@ export const showUserProfile = async (id_user) => {
                 id_user,
             },
         });
-        return res.data;
+        return res;
     } catch (error) {
         console.log(error);
     }
@@ -42,7 +53,7 @@ export const showVideos = async (id_user) => {
                 id_user,
             },
         });
-        return res.data;
+        return res;
     } catch (error) {
         console.log(error);
     }

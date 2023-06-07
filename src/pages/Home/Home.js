@@ -5,12 +5,12 @@ import MainPage from '~/layouts/components/MainPage';
 function Home() {
     const [videoList, setVideoList] = useState([]);
 
-    //lấy dữ liệu từ mysql
+    //lấy dữ liệu ở trang home
 
     useEffect(() => {
         const fetchApi = async () => {
-            const data = await showService.showHome();
-            setVideoList(data);
+            const res = await showService.showHome();
+            setVideoList(res.data.data);
         };
 
         fetchApi();

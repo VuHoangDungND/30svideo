@@ -12,6 +12,13 @@ export const setTheme = (state) => {
     };
 };
 
+export const setToken = (state) => {
+    return {
+        type: 'SET_TOKEN',
+        payload: state,
+    };
+};
+
 export const setModalLogin = (state) => {
     return {
         type: 'SET_MODAL-LOGIN',

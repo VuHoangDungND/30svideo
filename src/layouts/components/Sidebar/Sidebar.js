@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
-    const myState = useSelector((state) => state.reducer.userInfo);
+    const myState = useSelector((state) => state.reducer);
 
     return (
         <div className={cx('wrapper')}>
@@ -45,8 +45,8 @@ function Sidebar() {
                             activeIcon={<ExploreActiveIcon />}
                         />
                     </MenuPage>
-                    {myState ? null : <LoginRec />}
-                    {myState ? <SuggestedAccounts label="Suggested accounts" /> : null}
+                    {myState.token ? null : <LoginRec />}
+                    {myState.token ? <SuggestedAccounts label="Suggested accounts" /> : null}
 
                     <Discover />
                     <FooterSB />

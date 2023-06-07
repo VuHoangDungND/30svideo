@@ -43,10 +43,10 @@ function RegisterForm() {
 
         const fetchApi = async () => {
             const res = await registerService.register(userData);
-            if (res.data === null) alert(res.message);
+            if (res.data.data === null) alert(res.data.message);
             else {
                 navigate(config.routes.login);
-                alert(res.message);
+                alert(res.data.message);
             }
         };
 

@@ -20,8 +20,8 @@ function UserPage() {
     //lấy dữ liệu dựa trên nickname
     useEffect(() => {
         const fetchApi = async () => {
-            const data = await showService.showUserProfile(id_user);
-            setUserData(data[0]);
+            const res = await showService.showUserProfile(id_user);
+            setUserData(res.data.data[0]);
         };
         fetchApi();
     }, [id_user]);

@@ -17,7 +17,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
+import * as showService from '~/services/showService';
 import config from '~/config';
 import Button from '~/components/Button';
 import styles from './Header.module.scss';
@@ -26,6 +28,7 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
+import { actions } from '~/store';
 
 const cx = classNames.bind(styles);
 
@@ -104,14 +107,30 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
+    const [myState, setMyState] = useState();
     const dispatch = useDispatch();
-    const myState = useSelector((state) => state.reducer.userInfo);
-
+    const state = useSelector((state) => state.reducer);
     const navigate = useNavigate();
+
+    //lấy dữ liệu ở nếu lưu token ở local
+
+    useEffect(() => {
+        if (state.token) {
+            const fetchApi = async () => {
+                const res = await showService.showMyUser(state.token);
+                setMyState(res.data.data[0]);
+            };
+            fetchApi();
+        } else {
+            setMyState();
+        }
+    }, [state.token]);
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.title) {
             case 'Log out':
+                localStorage.removeItem('user');
+                dispatch(actions.setToken());
                 break;
             default:
         }

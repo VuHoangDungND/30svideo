@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as loginService from '~/services/loginService';
 import Button from '~/components/Button';
@@ -16,6 +16,7 @@ import {
     faInstagram,
     faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
+import { actions } from '~/store';
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +27,7 @@ function LoginForm() {
     });
 
     const dispatch = useDispatch();
+    const state = useSelector((state) => state.reducer);
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
@@ -37,10 +39,15 @@ function LoginForm() {
 
         const fetchApi = async () => {
             const res = await loginService.login(userData);
-            if (res.data === null) alert(res.message);
+            if (res.data.token === null) alert(res.data.message);
             else {
+                dispatch(actions.setToken(res.data.token));
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify({ token: res.data.token, theme: state.theme }),
+                );
                 navigate(config.routes.home);
-                alert(res.message);
+                alert(res.data.message);
             }
         };
 

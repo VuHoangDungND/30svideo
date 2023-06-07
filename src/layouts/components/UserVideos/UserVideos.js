@@ -15,9 +15,8 @@ function UserVideos({ id_user }) {
     //lấy dữ liệu dựa trên nick name
     useEffect(() => {
         const fetchApi = async () => {
-            const data = await showService.showVideos(id_user);
-
-            setMyVideoList(data);
+            const res = await showService.showVideos(id_user);
+            setMyVideoList(res.data.data);
         };
         fetchApi();
     }, [id_user]);
