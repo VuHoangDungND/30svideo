@@ -112,13 +112,13 @@ function Header() {
     const state = useSelector((state) => state.reducer);
     const navigate = useNavigate();
 
-    //lấy dữ liệu ở nếu lưu token ở local
+    //lấy dữ liệu ở nếu khi token ở local thay đổi
 
     useEffect(() => {
         if (state.token) {
             const fetchApi = async () => {
                 const res = await showService.showMyUser(state.token);
-                setMyState(res.data.data[0]);
+                setMyState(res.data.data);
             };
             fetchApi();
         } else {

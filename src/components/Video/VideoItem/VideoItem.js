@@ -26,7 +26,7 @@ function VideoItem({ video_url, isInView }) {
     }, [isInView]);
 
     return (
-        <div className={cx('wrapper')} onClick={() => {}}>
+        <div className={cx('wrapper')}>
             <ReactPlayer
                 url={video_url}
                 loop
