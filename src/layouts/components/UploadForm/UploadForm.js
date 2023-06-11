@@ -12,6 +12,7 @@ function UploadForm() {
     const [video, setVideo] = useState();
     const [videoInfo, setVideoInfo] = useState({
         description: '',
+        music: '',
         status: '',
     });
     const filePickerRef = useRef(null);
@@ -99,6 +100,19 @@ function UploadForm() {
                                 rows="10"
                                 required
                                 value={videoInfo.description}
+                                onChange={handleChange}
+                            ></textarea>
+                            <br />
+
+                            {/* đoạn text giới thiệu video */}
+                            <label htmlFor="music"> Music </label>
+                            <br />
+                            <textarea
+                                name="music"
+                                id="music"
+                                rows="3"
+                                required
+                                value={videoInfo.music}
                                 onChange={handleChange}
                             ></textarea>
                             <br />

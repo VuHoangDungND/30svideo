@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 

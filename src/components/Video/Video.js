@@ -162,9 +162,9 @@ function Video({ data, callback, index }) {
                         </div>
 
                         <div className={cx('btn-item')}>
-                            <span className={cx('icon-wrapper')}>
+                            <a className={cx('icon-wrapper')} href={data.video_url} download>
                                 <FontAwesomeIcon icon={faDownload} className={cx('icon')} />
-                            </span>
+                            </a>
 
                             <span className={cx('text')}>{data.download}</span>
                         </div>
