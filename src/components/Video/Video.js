@@ -112,10 +112,7 @@ function Video({ data, callback, index }) {
                                 render={() => renderPreview()}
                                 popperOptions={{ strategy: 'fixed' }}
                             >
-                                <Link
-                                    to={`/user/@${data.full_name}`}
-                                    className={cx('user-nickname')}
-                                >
+                                <Link to={`/user/@${data.id_user}`} className={cx('user-nickname')}>
                                     {data.nickname}
                                     <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                                 </Link>
@@ -142,7 +139,7 @@ function Video({ data, callback, index }) {
                 {/* phần video */}
                 <div className={cx('video-content')}>
                     <div className={cx('video')}>
-                        <VideoItem video_url={data.video_url} isInView={isInView} />
+                        <VideoItem data={data} isInView={isInView} />
                     </div>
 
                     {/* icon bên phải video */}

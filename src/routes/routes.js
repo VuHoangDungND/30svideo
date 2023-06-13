@@ -11,6 +11,7 @@ import Search from '~/pages/Search';
 import Explore from '~/pages/Explore';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
+import VideoWatcher from '~/pages/VideoWatcher';
 
 //public routes
 const publicRoutes = [
@@ -22,6 +23,7 @@ const publicRoutes = [
     { path: config.routes.profile, component: Profile },
     { path: config.routes.upload, component: Upload, layout: HeaderOnly },
     { path: config.routes.search, component: Search },
+    { path: config.routes.videowatcher, component: VideoWatcher, layout: null },
 ];
 
 const privateRoutes = [];

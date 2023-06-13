@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
@@ -11,13 +12,15 @@ import { actions } from '~/store';
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ video_url, isInView }) {
+function VideoItem({ data, isInView }) {
     const state = useSelector((state) => state.reducer);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [isPlaying, setIsPlaying] = useState(isInView);
 
-    const handlePlay = () => {
+    const handlePlay = (e) => {
+        e.stopPropagation();
         setIsPlaying(!isPlaying);
     };
 
@@ -28,7 +31,7 @@ function VideoItem({ video_url, isInView }) {
     return (
         <div className={cx('wrapper')}>
             <ReactPlayer
-                url={video_url}
+                url={data.video_url}
                 loop
                 width="100%"
                 height="calc(450px + ((100vw - 768px) / 1152) * 200)"
@@ -37,8 +40,11 @@ function VideoItem({ video_url, isInView }) {
                 playsinline
             />
 
-            <div className={cx('cover')}>
-                <button className={cx('icon-play')} onClick={handlePlay}>
+            <div
+                className={cx('cover')}
+                onClick={() => navigate(`/@${data.id_user}/video/${data.id_video}`)}
+            >
+                <button className={cx('icon-play')} onClick={(e) => handlePlay(e)}>
                     {isPlaying ? (
                         <FontAwesomeIcon icon={faPause} />
                     ) : (
@@ -46,7 +52,7 @@ function VideoItem({ video_url, isInView }) {
                     )}
                 </button>
 
-                <div className={cx('sound-controls')}>
+                <div className={cx('sound-controls')} onClick={(e) => e.stopPropagation()}>
                     <input
                         value={state.volume}
                         className={cx('input-volume')}
@@ -61,7 +67,8 @@ function VideoItem({ video_url, isInView }) {
                 </div>
                 <button
                     className={cx('icon-sound')}
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.stopPropagation();
                         dispatch(actions.setVolume(state.volume === '0' ? '50' : '0'));
                     }}
                 >
@@ -80,6 +87,6 @@ function VideoItem({ video_url, isInView }) {
 export default VideoItem;
 
 VideoItem.propTypes = {
-    video_url: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired,
     isInView: PropTypes.bool,
 };

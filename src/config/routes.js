@@ -6,7 +6,8 @@ const routes = {
     explore: '/explore',
     login: '/user/login',
     register: '/user/register',
-    profile: '/user/:nickname',
+    profile: '/user/:id_user',
+    videowatcher: '/:id_user/video/:id_video',
 };
 
 export default routes;
