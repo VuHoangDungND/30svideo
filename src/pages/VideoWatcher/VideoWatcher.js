@@ -1,5 +1,7 @@
+import Watcher from '~/layouts/components/Watcher';
+
 function VideoWatcher() {
-    return <h1>Here</h1>;
+    return <Watcher />;
 }
 
 export default VideoWatcher;

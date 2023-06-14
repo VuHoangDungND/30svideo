@@ -98,21 +98,11 @@
 
 //video
 .video {
-    background-size: cover;
     cursor: pointer;
-    border-radius: 8px;
-    overflow: hidden;
     margin-right: 2rem;
     height: calc(450px + ((100vw - 768px) / 1152) * 200);
     aspect-ratio: 56.25/100;
     object-fit: cover;
-    position: relative;
-
-    video {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
 }
 
 //các icon bên cạnh video

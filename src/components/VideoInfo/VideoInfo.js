@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import styles from './Video.module.scss';
+import styles from './VideoInfo.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCheckCircle,
@@ -16,7 +16,7 @@ import {
     faMusic,
     faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import VideoItem from './VideoItem';
+import VideoItem from '../VideoItem';
 import AccountPreview from '~/components/AccountPreview';
 import { Link } from 'react-router-dom';
 import {

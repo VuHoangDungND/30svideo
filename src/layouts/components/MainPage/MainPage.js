@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import Video from '~/components/Video';
+import VideoInfo from '~/components/VideoInfo';
 
 function MainPage({ videoList }) {
     const list = useRef([]);
@@ -71,7 +71,7 @@ function MainPage({ videoList }) {
     return (
         <>
             {videoList.map((result, index) => (
-                <Video data={result} key={index} callback={handlePushList} index={index} />
+                <VideoInfo data={result} key={index} callback={handlePushList} index={index} />
             ))}
         </>
     );
