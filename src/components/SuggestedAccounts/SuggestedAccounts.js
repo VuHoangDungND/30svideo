@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import * as showService from '~/services/showService';
 
 import styles from './SuggestedAccounts.module.scss';
-import Account from './Account';
+import Account from '~/components/Account';
 
 const cx = classNames.bind(styles);
 function SuggestedAccounts({ label }) {
@@ -24,7 +24,7 @@ function SuggestedAccounts({ label }) {
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>
             {result.map((result, index) => (
-                <Account key={index} data={result} />
+                <Account key={index} data={result} activeHover />
             ))}
             {/* nút bật tắt all list account */}
             {limited ? (

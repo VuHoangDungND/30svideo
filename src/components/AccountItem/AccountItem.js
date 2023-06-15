@@ -8,9 +8,12 @@ import Image from '../Image';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ data }) {
+function AccountItem({ data, activeHover = false }) {
     return (
-        <Link to={`/user/@${data.id_user}`} className={cx('wrapper')}>
+        <Link
+            to={`/user/@${data.id_user}`}
+            className={cx('wrapper', activeHover ? 'activeHover' : '')}
+        >
             <Image className={cx('avatar')} src={data.avatar} alt={data.username} />
             <div className={cx('info')}>
                 <h4 className={cx('nickname')}>
@@ -25,6 +28,7 @@ function AccountItem({ data }) {
 
 AccountItem.propTypes = {
     data: PropTypes.object.isRequired,
+    activeHover: PropTypes.bool,
 };
 
 export default AccountItem;

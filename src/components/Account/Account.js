@@ -3,9 +3,9 @@ import Tippy from '@tippyjs/react/headless';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountPreview from '~/components/AccountPreview';
-import AccountItem from '../AccountItem';
+import AccountItem from '~/components/AccountItem';
 
-function Account({ data }) {
+function Account({ data, activeHover = false }) {
     //Render tippy
     const renderPreview = (props) => {
         return (
@@ -28,7 +28,7 @@ function Account({ data }) {
                 popperOptions={{ strategy: 'fixed' }}
             >
                 <div>
-                    <AccountItem key={data.id} data={data} />
+                    <AccountItem key={data.id} data={data} activeHover={activeHover} />
                 </div>
             </Tippy>
         </div>
@@ -37,6 +37,7 @@ function Account({ data }) {
 
 Account.propTypes = {
     data: PropTypes.object.isRequired,
+    hover: PropTypes.bool,
 };
 
 export default Account;

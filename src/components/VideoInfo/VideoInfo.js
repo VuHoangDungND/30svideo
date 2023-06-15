@@ -22,9 +22,9 @@ import { Link } from 'react-router-dom';
 import {
     faEmber,
     faFacebook,
-    faGoogle,
     faInstagram,
-    faTwitch,
+    faTelegram,
+    faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import Menu from '../Popper/Menu';
 
@@ -47,19 +47,19 @@ function Video({ data, callback, index }) {
             to: 'https://www.facebook.com/',
         },
         {
-            icon: <FontAwesomeIcon icon={faTwitch} />,
+            icon: <FontAwesomeIcon icon={faInstagram} />,
+            title: 'Share to Instagram',
+            to: 'https://instagram.com/',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faTwitter} />,
             title: 'Share to Twitter',
             to: 'https://twitter.com/',
         },
         {
-            icon: <FontAwesomeIcon icon={faGoogle} />,
-            title: 'Share to Google',
-            to: 'https://google.com/',
-        },
-        {
-            icon: <FontAwesomeIcon icon={faInstagram} />,
-            title: 'Share to Instagram',
-            to: 'https://instagram.com/',
+            icon: <FontAwesomeIcon icon={faTelegram} />,
+            title: 'Share to Telegram',
+            to: 'https://web.telegram.org/',
         },
     ];
 

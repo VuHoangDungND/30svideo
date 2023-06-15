@@ -11,12 +11,18 @@ import { actions } from '~/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCheckCircle,
+    faCode,
+    faHeart,
+    faMusic,
     faPlay,
     faVolumeHigh,
     faVolumeMute,
     faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import AccountPreview from '~/components/AccountPreview';
+import Image from '~/components/Image';
+import { faFacebook, faInstagram, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import Account from '~/components/Account';
 
 const cx = classNames.bind(styles);
 
@@ -54,7 +60,14 @@ function Watcher() {
         setSeekTime(state.played);
     };
 
-    const data = { nickname: 'dungne', full_name: 'hehe' };
+    const data = {
+        nickname: 'dungne',
+        full_name: 'hehe',
+        avatar: null,
+        description: 'Đặng Thu Hà thử mặc đồ của chị Dung Editor - h.ở đam mê, b.ó táo bạo',
+        music: 'null',
+        like: '1000',
+    };
     //Render tippy
     const renderPreview = (props) => {
         return (
@@ -68,11 +81,12 @@ function Watcher() {
 
     return (
         <div className={cx('wrapper')}>
+            {/* Phần video góc phải */}
             <div className={cx('video-container')}>
                 <div className={cx('video-info')}>
                     <ReactPlayer
                         ref={videoRef}
-                        url={'https://www.youtube.com/watch?v=HV_HIWW09fE'}
+                        url={'https://www.youtube.com/watch?v=R2XaalGNq8k&t=1216s'}
                         loop
                         width="100%"
                         height="100vh"
@@ -157,27 +171,129 @@ function Watcher() {
             </div>
             <div className={cx('content-container')}>
                 <div className={cx('info-container')}>
-                    <div className={cx('user')}>
-                        <div>
-                            <Tippy
-                                interactive
-                                delay={[800, 0]}
-                                offset={[-20, 0]}
-                                placement="bottom"
-                                render={() => renderPreview()}
-                                popperOptions={{ strategy: 'fixed' }}
-                            >
-                                <Link className={cx('user-nickname')}>
-                                    {data.nickname}
-                                    <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
-                                </Link>
-                            </Tippy>
+                    <Tippy
+                        interactive
+                        delay={[800, 0]}
+                        offset={[-20, 0]}
+                        placement="bottom"
+                        render={() => renderPreview()}
+                        popperOptions={{ strategy: 'fixed' }}
+                    >
+                        <div className={cx('info')}>
+                            <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
+
+                            <Link className={cx('user-nickname')}>
+                                {data.nickname}
+                                <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
+                            </Link>
+                            <div className={cx('user-fullname')}>{data.full_name}</div>
                         </div>
-                        <div className={cx('user-fullname')}>{data.full_name}</div>
+                    </Tippy>
+                </div>
+                <div className={cx('main-content')}>
+                    <div className={cx('description')}>{data.description}</div>
+                    <div className={cx('music')}>
+                        <FontAwesomeIcon icon={faMusic} />
+                        <div className={cx('music-name')}>{data.music}</div>
+                    </div>
+
+                    <div className={cx('contact-container')}>
+                        <div className={cx('icon-row')}>
+                            <div className={cx('icon-video')}>
+                                <div className={cx('icon-video-item')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                                    </div>
+                                    <span className={cx('icon-video-text')}>{data.like}</span>
+                                </div>
+                                <div className={cx('icon-video-item')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                                    </div>
+                                    <span className={cx('icon-video-text')}>{data.like}</span>
+                                </div>
+                                <div className={cx('icon-video-item')}>
+                                    <div className={cx('icon-wrapper')}>
+                                        <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                                    </div>
+                                    <span className={cx('icon-video-text')}>{data.like}</span>
+                                </div>
+                            </div>
+                            <div className={cx('icon-share')}>
+                                <div className={cx('icon-share-item')}>
+                                    <FontAwesomeIcon icon={faCode} />
+                                </div>
+                                <div className={cx('icon-share-item')}>
+                                    <FontAwesomeIcon icon={faFacebook} />
+                                </div>
+                                <div className={cx('icon-share-item')}>
+                                    <FontAwesomeIcon icon={faInstagram} />
+                                </div>
+                                <div className={cx('icon-share-item')}>
+                                    <FontAwesomeIcon icon={faTwitter} />
+                                </div>
+                                <div className={cx('icon-share-item')}>
+                                    <FontAwesomeIcon icon={faTelegram} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={cx('copylink-container')}>
+                            <p className={cx('copylink-text')}>{window.location.href}</p>
+                            <button className={cx('copylink-button')}>Copy link</button>
+                        </div>
                     </div>
                 </div>
-                <div className={cx('main-content')}></div>
-                <div className={cx('comment-container')}></div>
+
+                <div className={cx('comment-container')}>
+                    <div className={cx('comment-list-container')}>
+                        <div className={cx('comment-item-container')}>
+                            <div className={cx('comment-content-container')}>
+                                <Account data={data} />
+                                <p className="comment-text">{data.description}</p>
+                                <p className="comment-subtext">
+                                    <span className={cx('comment-time')}>12h</span>
+                                    <span className={cx('comment-reply')}>reply</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={cx('comment-item-container')}>
+                            <div className={cx('comment-content-container')}>
+                                <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
+                                <div className={cx('info')}>
+                                    <div>
+                                        <Tippy
+                                            interactive
+                                            delay={[800, 0]}
+                                            offset={[-20, 0]}
+                                            placement="bottom"
+                                            render={() => renderPreview()}
+                                            popperOptions={{ strategy: 'fixed' }}
+                                        >
+                                            <Link className={cx('user-nickname')}>
+                                                {data.nickname}
+                                                <FontAwesomeIcon
+                                                    className={cx('check')}
+                                                    icon={faCheckCircle}
+                                                />
+                                            </Link>
+                                        </Tippy>
+                                    </div>
+                                </div>
+                                <p className="comment-text">{data.description}</p>
+                                <p className="comment-subtext">
+                                    <span className={cx('comment-time')}>12h</span>
+                                    <span className={cx('comment-reply')}>reply</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={cx('bottom-comment-container')}>
+                    <div className={cx('comment-bar')}>Here to comment</div>
+                </div>
             </div>
         </div>
     );
