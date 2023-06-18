@@ -2,15 +2,12 @@ import classNames from 'classnames/bind';
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Watcher.module.scss';
-import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Tippy from '@tippyjs/react/headless';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { actions } from '~/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faCheckCircle,
     faCode,
     faHeart,
     faMusic,
@@ -19,10 +16,9 @@ import {
     faVolumeMute,
     faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import AccountPreview from '~/components/AccountPreview';
-import Image from '~/components/Image';
 import { faFacebook, faInstagram, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import Account from '~/components/Account';
+import * as watchService from '~/services/watchService';
 
 const cx = classNames.bind(styles);
 
@@ -30,7 +26,21 @@ function Watcher() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.reducer);
     const navigate = useNavigate();
+    const [data, setData] = useState({});
 
+    // gọi API
+    useEffect(() => {
+        const address = window.location.pathname.split('/');
+        const fetchApi = async () => {
+            const res = await watchService.watch(address[1].slice(1), address[3]);
+            setData(res.data.data[0]);
+            console.log(res.data.data);
+        };
+
+        fetchApi();
+    }, []);
+
+    // dữ liệu của video
     const [isPlaying, setIsPlaying] = useState(true);
     const [seekTime, setSeekTime] = useState('0');
     const [playTime, setPlayTime] = useState('0');
@@ -60,25 +70,6 @@ function Watcher() {
         setSeekTime(state.played);
     };
 
-    const data = {
-        nickname: 'dungne',
-        full_name: 'hehe',
-        avatar: null,
-        description: 'Đặng Thu Hà thử mặc đồ của chị Dung Editor - h.ở đam mê, b.ó táo bạo',
-        music: 'null',
-        like: '1000',
-    };
-    //Render tippy
-    const renderPreview = (props) => {
-        return (
-            <div tabIndex="-1" {...props}>
-                <PopperWrapper>
-                    <AccountPreview data={data} />
-                </PopperWrapper>
-            </div>
-        );
-    };
-
     return (
         <div className={cx('wrapper')}>
             {/* Phần video góc phải */}
@@ -86,7 +77,7 @@ function Watcher() {
                 <div className={cx('video-info')}>
                     <ReactPlayer
                         ref={videoRef}
-                        url={'https://www.youtube.com/watch?v=R2XaalGNq8k&t=1216s'}
+                        url={data.video_url}
                         loop
                         width="100%"
                         height="100vh"
@@ -171,24 +162,7 @@ function Watcher() {
             </div>
             <div className={cx('content-container')}>
                 <div className={cx('info-container')}>
-                    <Tippy
-                        interactive
-                        delay={[800, 0]}
-                        offset={[-20, 0]}
-                        placement="bottom"
-                        render={() => renderPreview()}
-                        popperOptions={{ strategy: 'fixed' }}
-                    >
-                        <div className={cx('info')}>
-                            <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
-
-                            <Link className={cx('user-nickname')}>
-                                {data.nickname}
-                                <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
-                            </Link>
-                            <div className={cx('user-fullname')}>{data.full_name}</div>
-                        </div>
-                    </Tippy>
+                    <Account data={data} watcher />
                 </div>
                 <div className={cx('main-content')}>
                     <div className={cx('description')}>{data.description}</div>
@@ -249,7 +223,7 @@ function Watcher() {
                     <div className={cx('comment-list-container')}>
                         <div className={cx('comment-item-container')}>
                             <div className={cx('comment-content-container')}>
-                                <Account data={data} />
+                                <Account data={data} watcher />
                                 <p className="comment-text">{data.description}</p>
                                 <p className="comment-subtext">
                                     <span className={cx('comment-time')}>12h</span>
@@ -260,27 +234,40 @@ function Watcher() {
 
                         <div className={cx('comment-item-container')}>
                             <div className={cx('comment-content-container')}>
-                                <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
-                                <div className={cx('info')}>
-                                    <div>
-                                        <Tippy
-                                            interactive
-                                            delay={[800, 0]}
-                                            offset={[-20, 0]}
-                                            placement="bottom"
-                                            render={() => renderPreview()}
-                                            popperOptions={{ strategy: 'fixed' }}
-                                        >
-                                            <Link className={cx('user-nickname')}>
-                                                {data.nickname}
-                                                <FontAwesomeIcon
-                                                    className={cx('check')}
-                                                    icon={faCheckCircle}
-                                                />
-                                            </Link>
-                                        </Tippy>
-                                    </div>
-                                </div>
+                                <Account data={data} watcher />
+                                <p className="comment-text">{data.description}</p>
+                                <p className="comment-subtext">
+                                    <span className={cx('comment-time')}>12h</span>
+                                    <span className={cx('comment-reply')}>reply</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={cx('comment-item-container')}>
+                            <div className={cx('comment-content-container')}>
+                                <Account data={data} watcher />
+                                <p className="comment-text">{data.description}</p>
+                                <p className="comment-subtext">
+                                    <span className={cx('comment-time')}>12h</span>
+                                    <span className={cx('comment-reply')}>reply</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={cx('comment-item-container')}>
+                            <div className={cx('comment-content-container')}>
+                                <Account data={data} watcher />
+                                <p className="comment-text">{data.description}</p>
+                                <p className="comment-subtext">
+                                    <span className={cx('comment-time')}>12h</span>
+                                    <span className={cx('comment-reply')}>reply</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={cx('comment-item-container')}>
+                            <div className={cx('comment-content-container')}>
+                                <Account data={data} watcher />
                                 <p className="comment-text">{data.description}</p>
                                 <p className="comment-subtext">
                                     <span className={cx('comment-time')}>12h</span>

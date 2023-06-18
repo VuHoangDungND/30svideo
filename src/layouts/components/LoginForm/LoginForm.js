@@ -42,6 +42,7 @@ function LoginForm() {
             if (res.data.token === null) alert(res.data.message);
             else {
                 dispatch(actions.setToken(res.data.token));
+                dispatch(actions.setLogin(true));
                 localStorage.setItem(
                     'user',
                     JSON.stringify({ token: res.data.token, theme: state.theme }),

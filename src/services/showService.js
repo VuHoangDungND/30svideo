@@ -9,12 +9,24 @@ export const showHome = async () => {
     }
 };
 
-export const showSuggestAccount = async (type) => {
+export const showHomeWithLogin = async (token) => {
+    try {
+        const res = await httpRequest.get('/user', {
+            headers: { Authorization: 'Bearer ' + token },
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const showSuggestAccount = async (token, type) => {
     try {
         const res = await httpRequest.get(`/user/suggestAccounts`, {
             params: {
                 type,
             },
+            headers: { Authorization: 'Bearer ' + token },
         });
         return res;
     } catch (error) {
@@ -24,7 +36,7 @@ export const showSuggestAccount = async (type) => {
 
 export const showMyUser = async (token) => {
     try {
-        const res = await httpRequest.get(`/user`, {
+        const res = await httpRequest.get(`/user/showMyUser`, {
             headers: { Authorization: 'Bearer ' + token },
         });
         return res;

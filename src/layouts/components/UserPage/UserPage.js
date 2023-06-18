@@ -40,25 +40,33 @@ function UserPage() {
                             </div>
 
                             <div className={cx('full_name')}> {userData.full_name}</div>
-                            <Button primary className={cx('follow-btn')}>
-                                Follow
+                            <Button
+                                primary={userData.follow_user}
+                                outline={!userData.follow_user}
+                                className={cx('follow-btn')}
+                                onClick={setUserData({
+                                    ...userData,
+                                    follow_user: !userData.follow_user,
+                                })}
+                            >
+                                {userData.follow_user ? 'Following' : 'Follow'}
                             </Button>
                         </div>
                     </div>
 
                     <div className={cx('count-info')}>
                         <div className={cx('number')}>
-                            <strong className={cx('value')}>29</strong>
+                            <strong className={cx('value')}>{userData.following}</strong>
                             <span className={cx('label')}> Following</span>
                         </div>
 
                         <div className={cx('number')}>
-                            <strong className={cx('value')}>68.7K</strong>
+                            <strong className={cx('value')}>{userData.followers}</strong>
                             <span className={cx('label')}> Followers</span>
                         </div>
 
                         <div className={cx('number')}>
-                            <strong className={cx('value')}>1.6M</strong>
+                            <strong className={cx('value')}>{userData.likes}</strong>
                             <span className={cx('label')}> Likes</span>
                         </div>
                     </div>

@@ -8,11 +8,11 @@ import Image from '../Image';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ data, activeHover = false }) {
+function AccountItem({ data, suggested = false, watcher = false }) {
     return (
         <Link
             to={`/user/@${data.id_user}`}
-            className={cx('wrapper', activeHover ? 'activeHover' : '')}
+            className={cx('wrapper', suggested ? 'suggested' : '', watcher ? 'watcher' : '')}
         >
             <Image className={cx('avatar')} src={data.avatar} alt={data.username} />
             <div className={cx('info')}>

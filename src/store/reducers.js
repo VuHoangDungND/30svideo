@@ -5,7 +5,7 @@ const initstate = {
     token: null,
     volume: '0',
     theme: 'white',
-    modalLogin: false,
+    currentLogin: false,
     ...localState,
 };
 
@@ -29,10 +29,10 @@ const reducers = (state = initstate, action) => {
                 token: action.payload,
             };
 
-        case 'SET_MODAL-LOGIN':
+        case 'SET_LOGIN':
             return {
                 ...state,
-                modalLogin: action.payload,
+                currentLogin: action.payload,
             };
 
         default:

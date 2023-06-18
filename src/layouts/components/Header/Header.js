@@ -119,18 +119,20 @@ function Header() {
             const fetchApi = async () => {
                 const res = await showService.showMyUser(state.token);
                 setMyState(res.data.data);
+                dispatch(actions.setLogin(res.data.data ? true : false));
             };
             fetchApi();
         } else {
             setMyState();
         }
-    }, [state.token]);
+    }, [state.token, dispatch]);
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.title) {
             case 'Log out':
                 localStorage.removeItem('user');
                 dispatch(actions.setToken());
+                dispatch(actions.setLogin(false));
                 break;
             default:
         }

@@ -1,13 +1,20 @@
 .wrapper {
     display: flex;
     align-items: center;
-    padding: 6px 16px;
     cursor: pointer;
 }
 
-.wrapper.activeHover {
+.wrapper.suggested {
+    padding: 6px 16px;
     &:hover {
         background: rgba(22, 24, 35, 0.03);
+    }
+}
+
+.wrapper.watcher {
+    &:hover ~ .wrapper {
+        color: red;
+        text-decoration: underline;
     }
 }
 

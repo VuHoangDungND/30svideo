@@ -5,7 +5,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountPreview from '~/components/AccountPreview';
 import AccountItem from '~/components/AccountItem';
 
-function Account({ data, activeHover = false }) {
+function Account({ data, suggested = false, watcher = false }) {
     //Render tippy
     const renderPreview = (props) => {
         return (
@@ -28,7 +28,12 @@ function Account({ data, activeHover = false }) {
                 popperOptions={{ strategy: 'fixed' }}
             >
                 <div>
-                    <AccountItem key={data.id} data={data} activeHover={activeHover} />
+                    <AccountItem
+                        key={data.id}
+                        data={data}
+                        suggested={suggested}
+                        watcher={watcher}
+                    />
                 </div>
             </Tippy>
         </div>
@@ -37,7 +42,7 @@ function Account({ data, activeHover = false }) {
 
 Account.propTypes = {
     data: PropTypes.object.isRequired,
-    hover: PropTypes.bool,
+    suggested: PropTypes.bool,
 };
 
 export default Account;

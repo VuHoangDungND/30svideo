@@ -19,9 +19,9 @@ export const setToken = (state) => {
     };
 };
 
-export const setModalLogin = (state) => {
+export const setLogin = (state) => {
     return {
-        type: 'SET_MODAL-LOGIN',
+        type: 'SET_LOGIN',
         payload: state,
     };
 };

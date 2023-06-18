@@ -18,7 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import VideoItem from '../VideoItem';
 import AccountPreview from '~/components/AccountPreview';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     faEmber,
     faFacebook,
@@ -27,12 +27,19 @@ import {
     faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import Menu from '../Popper/Menu';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-function Video({ data, callback, index }) {
+function VideoInfo({ data, callback, index }) {
+    const state = useSelector((state) => state.reducer);
+    const navigate = useNavigate();
     const [isInView, setIsInView] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
+
+    useEffect(() => {
+        setIsFollowing(data.follow_user === 1);
+    }, [data.follow_user]);
 
     const viewRef = useRef(null);
 
@@ -97,6 +104,17 @@ function Video({ data, callback, index }) {
         );
     };
 
+    //handle follow
+    const handleFollow = () => {
+        if (state.currentLogin) setIsFollowing(!isFollowing);
+        else alert('Đăng nhập để sử dụng tính năng trên');
+    };
+
+    // handle comment
+    const handleComment = () => {
+        navigate(`/@${data.id_user}/video/${data.id_video}`);
+    };
+
     return (
         <div className={cx('wrapper')} ref={viewRef}>
             <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
@@ -128,11 +146,12 @@ function Video({ data, callback, index }) {
                         <div className={cx('music-name')}>{data.music}</div>
                     </h4>
                     <Button
-                        outline
-                        className={cx('follow-btn', isFollowing ? 'active' : '')}
-                        onClick={() => setIsFollowing(!isFollowing)}
+                        outline={!isFollowing}
+                        primary={isFollowing}
+                        className={cx('follow-btn')}
+                        onClick={handleFollow}
                     >
-                        {!isFollowing ? ' Follow' : 'Following'}
+                        {isFollowing ? ' Following' : 'Follow'}
                     </Button>
                 </div>
 
@@ -148,11 +167,15 @@ function Video({ data, callback, index }) {
                             <span className={cx('icon-wrapper')}>
                                 <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
                             </span>
-                            <span className={cx('text')}>{data.like}</span>
+                            <span className={cx('text')}>{data.likes}</span>
                         </div>
                         <div className={cx('btn-item')}>
                             <span className={cx('icon-wrapper')}>
-                                <FontAwesomeIcon icon={faComment} className={cx('icon')} />
+                                <FontAwesomeIcon
+                                    icon={faComment}
+                                    className={cx('icon')}
+                                    onClick={handleComment}
+                                />
                             </span>
 
                             <span className={cx('text')}>{data.comments}</span>
@@ -182,9 +205,9 @@ function Video({ data, callback, index }) {
     );
 }
 
-Video.propTypes = {
+VideoInfo.propTypes = {
     data: PropTypes.object.isRequired,
     callback: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
 };
-export default Video;
+export default VideoInfo;
