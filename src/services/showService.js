@@ -47,10 +47,24 @@ export const showMyUser = async (token) => {
 
 export const showUserProfile = async (id_user) => {
     try {
+        const res = await httpRequest.get(`/userProfile`, {
+            params: {
+                id_user,
+            },
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const showUserProfileWithLogin = async (token, id_user) => {
+    try {
         const res = await httpRequest.get(`/user/userProfile`, {
             params: {
                 id_user,
             },
+            headers: { Authorization: 'Bearer ' + token },
         });
         return res;
     } catch (error) {

@@ -67,15 +67,18 @@
 }
 
 .icon-play {
-    size: 10%;
-    width: 100px;
-    height: 100px;
-    top: 50%;
-    right: 250px;
-    left: 250px;
+    width: 100%;
+    height: 100%;
     position: absolute;
     color: var(--white);
     background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+        width: 100px;
+        height: 100px;
+    }
 }
 
 .sound-controls {
@@ -323,7 +326,6 @@
     height: 32px;
     border-radius: 50%;
     background-color: var(--border-icon);
-    color: var(--primary);
     padding: 6px;
     margin-right: 6px;
 }

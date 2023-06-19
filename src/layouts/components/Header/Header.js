@@ -162,7 +162,6 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
-            to: config.routes.home,
             separate: true,
         },
     ];

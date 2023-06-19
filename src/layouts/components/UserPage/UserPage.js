@@ -4,27 +4,47 @@ import { faCheckCircle, faEllipsis, faShare } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from '~/components/Image';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import * as showService from '~/services/showService';
 import styles from './UserPage.module.scss';
 import Button from '~/components/Button';
 import UserVideos from '../UserVideos';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 function UserPage() {
     const [userData, setUserData] = useState({});
-    let location = useLocation().pathname.split('/');
-    let id_user = location[2].slice(1);
+    const [isFollowing, setIsFollowing] = useState(userData.follow_user === 1);
+    const state = useSelector((state) => state.reducer);
 
     //lấy dữ liệu dựa trên nickname
     useEffect(() => {
-        const fetchApi = async () => {
-            const res = await showService.showUserProfile(id_user);
-            setUserData(res.data.data[0]);
-        };
+        var fetchApi;
+        var id_user = window.location.pathname.split('/')[2].slice(1);
+        if (state.currentLogin) {
+            fetchApi = async () => {
+                const res = await showService.showUserProfileWithLogin(state.token, id_user);
+                setUserData(res.data.data);
+            };
+        } else {
+            fetchApi = async () => {
+                const res = await showService.showUserProfile(id_user);
+                setUserData(res.data.data[0]);
+            };
+        }
+
         fetchApi();
-    }, [id_user]);
+    }, [state.currentLogin, state.token]);
+
+    // khi userData thay đổi thì isFollowing thay đổi theo
+    useEffect(() => {
+        setIsFollowing(userData.follow_user === 1);
+    }, [userData.follow_user]);
+
+    const handleFollow = () => {
+        if (state.currentLogin) setIsFollowing(!isFollowing);
+        else alert('Vui lòng đăng nhập để sử dụng tính năng này');
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -41,15 +61,12 @@ function UserPage() {
 
                             <div className={cx('full_name')}> {userData.full_name}</div>
                             <Button
-                                primary={userData.follow_user}
-                                outline={!userData.follow_user}
+                                primary={isFollowing}
+                                outline={!isFollowing}
                                 className={cx('follow-btn')}
-                                onClick={setUserData({
-                                    ...userData,
-                                    follow_user: !userData.follow_user,
-                                })}
+                                onClick={handleFollow}
                             >
-                                {userData.follow_user ? 'Following' : 'Follow'}
+                                {isFollowing ? 'Following' : 'Follow'}
                             </Button>
                         </div>
                     </div>

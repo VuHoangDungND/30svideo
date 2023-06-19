@@ -42,6 +42,7 @@ function VideoInfo({ data, callback, index }) {
     }, [data.follow_user]);
 
     const viewRef = useRef(null);
+    console.log(data.like_video === 1);
 
     const shareMenu = [
         {
@@ -165,7 +166,10 @@ function VideoInfo({ data, callback, index }) {
                     <div className={cx('video-icons')}>
                         <div className={cx('btn-item')}>
                             <span className={cx('icon-wrapper')}>
-                                <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                                <FontAwesomeIcon
+                                    icon={faHeart}
+                                    className={cx('icon', data.like_video === 1 ? 'like' : '')}
+                                />
                             </span>
                             <span className={cx('text')}>{data.likes}</span>
                         </div>

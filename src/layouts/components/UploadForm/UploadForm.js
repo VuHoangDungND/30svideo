@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import config from '~/config';
 
 import * as uploadService from '~/services/uploadService';
 import styles from './UploadForm.module.scss';
@@ -10,6 +12,7 @@ const cx = classNames.bind(styles);
 
 function UploadForm() {
     const [video, setVideo] = useState();
+    const navigate = useNavigate();
     const [videoInfo, setVideoInfo] = useState({
         description: '',
         music: '',
@@ -51,7 +54,9 @@ function UploadForm() {
 
         const fetchApi = async () => {
             const res = await uploadService.uploadVideo(state.token, formData);
-            console.log(res);
+            console.log(res.data);
+            alert(res.data.message);
+            navigate(config.routes.home);
         };
         fetchApi();
     };

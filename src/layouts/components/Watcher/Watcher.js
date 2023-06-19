@@ -9,6 +9,8 @@ import { actions } from '~/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCode,
+    faComment,
+    faDownload,
     faHeart,
     faMusic,
     faPlay,
@@ -34,7 +36,6 @@ function Watcher() {
         const fetchApi = async () => {
             const res = await watchService.watch(address[1].slice(1), address[3]);
             setData(res.data.data[0]);
-            console.log(res.data.data);
         };
 
         fetchApi();
@@ -99,9 +100,9 @@ function Watcher() {
                         <FontAwesomeIcon icon={faXmark} />
                     </button>
 
-                    {isPlaying ? null : (
-                        <FontAwesomeIcon icon={faPlay} className={cx('icon-play')} />
-                    )}
+                    <div className={cx('icon-play')}>
+                        {isPlaying ? null : <FontAwesomeIcon icon={faPlay} />}
+                    </div>
 
                     <div className={cx('sound-controls')} onClick={(e) => e.stopPropagation()}>
                         <button
@@ -178,19 +179,19 @@ function Watcher() {
                                     <div className={cx('icon-wrapper')}>
                                         <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
                                     </div>
-                                    <span className={cx('icon-video-text')}>{data.like}</span>
+                                    <span className={cx('icon-video-text')}>{data.likes}</span>
                                 </div>
                                 <div className={cx('icon-video-item')}>
                                     <div className={cx('icon-wrapper')}>
-                                        <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                                        <FontAwesomeIcon icon={faComment} className={cx('icon')} />
                                     </div>
-                                    <span className={cx('icon-video-text')}>{data.like}</span>
+                                    <span className={cx('icon-video-text')}>{data.comments}</span>
                                 </div>
                                 <div className={cx('icon-video-item')}>
                                     <div className={cx('icon-wrapper')}>
-                                        <FontAwesomeIcon icon={faHeart} className={cx('icon')} />
+                                        <FontAwesomeIcon icon={faDownload} className={cx('icon')} />
                                     </div>
-                                    <span className={cx('icon-video-text')}>{data.like}</span>
+                                    <span className={cx('icon-video-text')}>{data.download}</span>
                                 </div>
                             </div>
                             <div className={cx('icon-share')}>

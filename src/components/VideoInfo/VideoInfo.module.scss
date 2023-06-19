@@ -138,8 +138,8 @@
 .icon {
     height: 24px;
     width: 24px;
+}
 
-    &:hover {
-        fill: red;
-    }
+.icon.like {
+    color: red;
 }

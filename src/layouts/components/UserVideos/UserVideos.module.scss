@@ -30,9 +30,19 @@
     cursor: pointer;
 }
 
+.videos-tab:hover ~ .bottom-line {
+    transform: translateX(0px) !important;
+    width: 123px !important;
+}
+
 .liked-tab {
     span {
         margin-left: 10px;
+    }
+
+    &:hover ~ .bottom-line {
+        transform: translateX(123px) !important;
+        width: 130px !important;
     }
 }
 
