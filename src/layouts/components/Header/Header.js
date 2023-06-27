@@ -131,7 +131,7 @@ function Header() {
         switch (menuItem.title) {
             case 'Log out':
                 localStorage.removeItem('user');
-                dispatch(actions.setToken());
+                dispatch(actions.setToken(null));
                 dispatch(actions.setLogin(false));
                 break;
             default:

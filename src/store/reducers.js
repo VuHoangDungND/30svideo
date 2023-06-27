@@ -1,3 +1,5 @@
+import * as contactVideoService from '~/services/contactVideoService';
+
 //initial state
 const localState = JSON.parse(localStorage.getItem('user'));
 
@@ -8,6 +10,8 @@ const initstate = {
     currentLogin: false,
     ...localState,
 };
+
+let fetchApi;
 
 const reducers = (state = initstate, action) => {
     switch (action.type) {
@@ -34,6 +38,36 @@ const reducers = (state = initstate, action) => {
                 ...state,
                 currentLogin: action.payload,
             };
+
+        case 'SET_LIKE':
+            fetchApi = async () =>
+                await contactVideoService.like(
+                    state.token,
+                    action.payload.id_user,
+                    action.payload.id_video,
+                );
+            fetchApi();
+            return state;
+
+        case 'SET_UNLIKE':
+            fetchApi = async () =>
+                await contactVideoService.unlike(
+                    state.token,
+                    action.payload.id_user,
+                    action.payload.id_video,
+                );
+            fetchApi();
+            return state;
+
+        case 'SET_DOWNLOAD':
+            fetchApi = async () => await contactVideoService.download(action.payload.id_video);
+            fetchApi();
+            return state;
+
+        case 'SET_SHARE':
+            fetchApi = async () => await contactVideoService.share(action.payload.id_video);
+            fetchApi();
+            return state;
 
         default:
             return state;

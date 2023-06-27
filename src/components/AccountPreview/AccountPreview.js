@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Button from '~/components/Button';
 import styles from './AccountPreview.module.scss';
@@ -13,39 +13,47 @@ const cx = classNames.bind(styles);
 
 function AccountPreview({ data }) {
     const state = useSelector((state) => state.reducer);
-    const [isFollowing, setIsFollowing] = useState(data.follow_user === 1);
+    const [userData, setUserData] = useState({ ...data, follow_user: data.follow_user === 1 });
 
     const handleFollow = () => {
-        if (state.currentLogin) setIsFollowing(!isFollowing);
-        else alert('Đăng nhập để sử dụng tính năng trên');
+        if (state.currentLogin) {
+            if (userData.follow_user) {
+                //     dispatch(
+                //         actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
+                //     );
+                setUserData({ ...userData, follow_user: false });
+            } else {
+                //     dispatch(actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }));
+                setUserData({ ...userData, follow_user: true });
+            }
+        } else alert('Đăng nhập để sử dụng tính năng trên');
     };
-    useEffect(() => {
-        setIsFollowing(data.follow_user === 1);
-    }, [data.follow_user]);
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
-                <Image className={cx('avatar')} src={data.avatar} alt="" />
+                <Image className={cx('avatar')} src={userData.avatar} alt="" />
                 <Button
                     className={cx('follow-btn')}
                     onClick={handleFollow}
-                    primary={isFollowing}
-                    outline={!isFollowing}
+                    primary={userData.follow_user}
+                    outline={!userData.follow_user}
                 >
-                    {isFollowing ? 'Following' : 'Follow'}
+                    {userData.follow_user ? 'Following' : 'Follow'}
                 </Button>
             </div>
             <div className={cx('body')}>
                 <div className={cx('nickname')}>
-                    <strong>{data.nickname}</strong>
-                    {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
+                    <strong>{userData.nickname}</strong>
+                    {userData.tick && (
+                        <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
+                    )}
                 </div>
-                <div className={cx('full_name')}>{data.full_name}</div>
+                <div className={cx('full_name')}>{userData.full_name}</div>
                 <p className={cx('analytics')}>
-                    <strong className={cx('value')}>{data.followers || 0} </strong>
-                    <span className={cx('label')}>Followers</span>
-                    <strong className={cx('value')}>{data.total_likes || 0} </strong>
+                    <strong className={cx('value')}>{userData.followed || 0} </strong>
+                    <span className={cx('label')}>Followed</span>
+                    <strong className={cx('value')}>{userData.total_likes || 0} </strong>
                     <span className={cx('label')}>Likes</span>
                 </p>
             </div>

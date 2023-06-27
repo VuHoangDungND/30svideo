@@ -25,3 +25,31 @@ export const setLogin = (state) => {
         payload: state,
     };
 };
+
+export const setLike = (state) => {
+    return {
+        type: 'SET_LIKE',
+        payload: state,
+    };
+};
+
+export const setUnLike = (state) => {
+    return {
+        type: 'SET_UNLIKE',
+        payload: state,
+    };
+};
+
+export const setDownload = (state) => {
+    return {
+        type: 'SET_DOWNLOAD',
+        payload: state,
+    };
+};
+
+export const setShare = (state) => {
+    return {
+        type: 'SET_SHARE',
+        payload: state,
+    };
+};

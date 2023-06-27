@@ -78,8 +78,8 @@ function UserPage() {
                         </div>
 
                         <div className={cx('number')}>
-                            <strong className={cx('value')}>{userData.followers}</strong>
-                            <span className={cx('label')}> Followers</span>
+                            <strong className={cx('value')}>{userData.followed}</strong>
+                            <span className={cx('label')}> Followed</span>
                         </div>
 
                         <div className={cx('number')}>

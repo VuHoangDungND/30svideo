@@ -4,6 +4,7 @@ import Button from '../Button';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './VideoInfo.module.scss';
@@ -27,22 +28,31 @@ import {
     faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import Menu from '../Popper/Menu';
-import { useSelector } from 'react-redux';
+import { actions } from '~/store';
 
 const cx = classNames.bind(styles);
 
 function VideoInfo({ data, callback, index }) {
     const state = useSelector((state) => state.reducer);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [isInView, setIsInView] = useState(false);
-    const [isFollowing, setIsFollowing] = useState(false);
+    const [videoInfo, setVideoInfo] = useState({
+        ...data,
+        follow_user: data.follow_user === 1,
+        like_video: data.like_video === 1,
+    });
 
     useEffect(() => {
-        setIsFollowing(data.follow_user === 1);
-    }, [data.follow_user]);
+        setVideoInfo({
+            ...data,
+            follow_user: data.follow_user === 1,
+            like_video: data.like_video === 1,
+        });
+    }, [data]);
 
     const viewRef = useRef(null);
-    console.log(data.like_video === 1);
 
     const shareMenu = [
         {
@@ -107,18 +117,54 @@ function VideoInfo({ data, callback, index }) {
 
     //handle follow
     const handleFollow = () => {
-        if (state.currentLogin) setIsFollowing(!isFollowing);
-        else alert('Đăng nhập để sử dụng tính năng trên');
+        if (state.currentLogin) {
+            if (state.currentLogin) {
+                if (videoInfo.follow_user) {
+                    //     dispatch(
+                    //         actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
+                    //     );
+                    setVideoInfo({ ...videoInfo, follow_user: false });
+                } else {
+                    //     dispatch(actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }));
+                    setVideoInfo({ ...videoInfo, follow_user: true });
+                }
+            }
+        } else alert('Đăng nhập để sử dụng tính năng trên');
     };
 
     // handle comment
     const handleComment = () => {
-        navigate(`/@${data.id_user}/video/${data.id_video}`);
+        navigate(`/@${videoInfo.id_user}/video/${videoInfo.id_video}`);
+    };
+
+    //handle like video
+    const handleLikeVideo = () => {
+        if (videoInfo.like_video) {
+            dispatch(
+                actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
+            );
+            setVideoInfo({ ...videoInfo, like_video: false, likes: videoInfo.likes - 1 });
+        } else {
+            dispatch(actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }));
+            setVideoInfo({ ...videoInfo, like_video: true, likes: videoInfo.likes + 1 });
+        }
+    };
+
+    //handle download video
+    const handleDownload = () => {
+        dispatch(actions.setDownload({ id_video: videoInfo.id_video }));
+        setVideoInfo({ ...videoInfo, download: videoInfo.download + 1 });
+    };
+
+    //handle share video
+    const handleShare = () => {
+        dispatch(actions.setShare({ id_video: videoInfo.id_video }));
+        setVideoInfo({ ...videoInfo, share: videoInfo.share + 1 });
     };
 
     return (
         <div className={cx('wrapper')} ref={viewRef}>
-            <Image className={cx('avatar')} src={data.avatar} alt="avatar" />
+            <Image className={cx('avatar')} src={videoInfo.avatar} alt="avatar" />
             <div className={cx('content')}>
                 <div className={cx('header')}>
                     <div className={cx('user')}>
@@ -131,47 +177,50 @@ function VideoInfo({ data, callback, index }) {
                                 render={() => renderPreview()}
                                 popperOptions={{ strategy: 'fixed' }}
                             >
-                                <Link to={`/user/@${data.id_user}`} className={cx('user-nickname')}>
-                                    {data.nickname}
+                                <Link
+                                    to={`/user/@${videoInfo.id_user}`}
+                                    className={cx('user-nickname')}
+                                >
+                                    {videoInfo.nickname}
                                     <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
                                 </Link>
                             </Tippy>
                         </div>
-                        <div className={cx('user-fullname')}>{data.full_name}</div>
+                        <div className={cx('user-fullname')}>{videoInfo.full_name}</div>
                     </div>
 
                     {/* Thông tin video */}
-                    <div className={cx('desc')}>{data.description}</div>
+                    <div className={cx('desc')}>{videoInfo.description}</div>
                     <h4 className={cx('music')}>
                         <FontAwesomeIcon icon={faMusic} />
-                        <div className={cx('music-name')}>{data.music}</div>
+                        <div className={cx('music-name')}>{videoInfo.music}</div>
                     </h4>
                     <Button
-                        outline={!isFollowing}
-                        primary={isFollowing}
+                        outline={!videoInfo.follow_user}
+                        primary={videoInfo.follow_user}
                         className={cx('follow-btn')}
                         onClick={handleFollow}
                     >
-                        {isFollowing ? ' Following' : 'Follow'}
+                        {videoInfo.follow_user ? ' Following' : 'Follow'}
                     </Button>
                 </div>
 
                 {/* phần video */}
                 <div className={cx('video-content')}>
                     <div className={cx('video')}>
-                        <VideoItem data={data} isInView={isInView} />
+                        <VideoItem data={videoInfo} isInView={isInView} />
                     </div>
 
                     {/* icon bên phải video */}
                     <div className={cx('video-icons')}>
                         <div className={cx('btn-item')}>
-                            <span className={cx('icon-wrapper')}>
+                            <span className={cx('icon-wrapper')} onClick={handleLikeVideo}>
                                 <FontAwesomeIcon
                                     icon={faHeart}
-                                    className={cx('icon', data.like_video === 1 ? 'like' : '')}
+                                    className={cx('icon', videoInfo.like_video ? 'like' : '')}
                                 />
                             </span>
-                            <span className={cx('text')}>{data.likes}</span>
+                            <span className={cx('text')}>{videoInfo.likes}</span>
                         </div>
                         <div className={cx('btn-item')}>
                             <span className={cx('icon-wrapper')}>
@@ -182,25 +231,30 @@ function VideoInfo({ data, callback, index }) {
                                 />
                             </span>
 
-                            <span className={cx('text')}>{data.comments}</span>
+                            <span className={cx('text')}>{videoInfo.comments}</span>
                         </div>
 
                         <div className={cx('btn-item')}>
-                            <a className={cx('icon-wrapper')} href={data.video_url} download>
+                            <a
+                                className={cx('icon-wrapper')}
+                                href={videoInfo.video_url}
+                                download
+                                onClick={handleDownload}
+                            >
                                 <FontAwesomeIcon icon={faDownload} className={cx('icon')} />
                             </a>
 
-                            <span className={cx('text')}>{data.download}</span>
+                            <span className={cx('text')}>{videoInfo.download}</span>
                         </div>
 
                         <div className={cx('btn-item')}>
                             <Menu items={shareMenu} placement="right-start">
-                                <span className={cx('icon-wrapper')}>
+                                <span className={cx('icon-wrapper')} onClick={handleShare}>
                                     <FontAwesomeIcon icon={faShare} className={cx('icon')} />
                                 </span>
                             </Menu>
 
-                            <span className={cx('text')}>{data.share}</span>
+                            <span className={cx('text')}>{videoInfo.share}</span>
                         </div>
                     </div>
                 </div>
@@ -214,4 +268,5 @@ VideoInfo.propTypes = {
     callback: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
 };
+
 export default VideoInfo;

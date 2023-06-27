@@ -74,7 +74,7 @@ export const showUserProfileWithLogin = async (token, id_user) => {
 
 export const showVideos = async (id_user) => {
     try {
-        const res = await httpRequest.get(`/user/videos`, {
+        const res = await httpRequest.get(`/user/listUserVideos`, {
             params: {
                 id_user,
             },
