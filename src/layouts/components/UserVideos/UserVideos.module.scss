@@ -64,3 +64,11 @@
     transition: transform 0.3s ease 0s;
     width: 100px;
 }
+
+.warn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 40px;
+}

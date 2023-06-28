@@ -26,6 +26,27 @@ export const setLogin = (state) => {
     };
 };
 
+export const setId = (state) => {
+    return {
+        type: 'SET_ID',
+        payload: state,
+    };
+};
+
+export const setFollow = (state) => {
+    return {
+        type: 'SET_FOLLOW',
+        payload: state,
+    };
+};
+
+export const setUnFollow = (state) => {
+    return {
+        type: 'SET_UNFOLLOW',
+        payload: state,
+    };
+};
+
 export const setLike = (state) => {
     return {
         type: 'SET_LIKE',

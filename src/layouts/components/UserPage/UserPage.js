@@ -4,6 +4,7 @@ import { faCheckCircle, faEllipsis, faShare } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from '~/components/Image';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import * as showService from '~/services/showService';
 import styles from './UserPage.module.scss';
@@ -14,13 +15,14 @@ import { useSelector } from 'react-redux';
 const cx = classNames.bind(styles);
 function UserPage() {
     const [userData, setUserData] = useState({});
+    const location = useLocation();
     const [isFollowing, setIsFollowing] = useState(userData.follow_user === 1);
     const state = useSelector((state) => state.reducer);
 
     //lấy dữ liệu dựa trên nickname
     useEffect(() => {
+        var id_user = location.pathname.split('/')[2].slice(1);
         var fetchApi;
-        var id_user = window.location.pathname.split('/')[2].slice(1);
         if (state.currentLogin) {
             fetchApi = async () => {
                 const res = await showService.showUserProfileWithLogin(state.token, id_user);
@@ -34,7 +36,7 @@ function UserPage() {
         }
 
         fetchApi();
-    }, [state.currentLogin, state.token]);
+    }, [state.currentLogin, state.token, location.pathname]);
 
     // khi userData thay đổi thì isFollowing thay đổi theo
     useEffect(() => {
@@ -44,6 +46,10 @@ function UserPage() {
     const handleFollow = () => {
         if (state.currentLogin) setIsFollowing(!isFollowing);
         else alert('Vui lòng đăng nhập để sử dụng tính năng này');
+    };
+
+    const handleEdit = () => {
+        alert('Tinh nang dang trong qua trinh bao tri');
     };
 
     return (
@@ -60,14 +66,21 @@ function UserPage() {
                             </div>
 
                             <div className={cx('full_name')}> {userData.full_name}</div>
-                            <Button
-                                primary={isFollowing}
-                                outline={!isFollowing}
-                                className={cx('follow-btn')}
-                                onClick={handleFollow}
-                            >
-                                {isFollowing ? 'Following' : 'Follow'}
-                            </Button>
+                            {state.currentId === userData.id_user ? (
+                                <Button outline className={cx('follow-btn')} onClick={handleEdit}>
+                                    {' '}
+                                    Edit
+                                </Button>
+                            ) : (
+                                <Button
+                                    primary={isFollowing}
+                                    outline={!isFollowing}
+                                    className={cx('follow-btn')}
+                                    onClick={handleFollow}
+                                >
+                                    {isFollowing ? 'Following' : 'Follow'}
+                                </Button>
+                            )}
                         </div>
                     </div>
 

@@ -20,12 +20,9 @@ export const showHomeWithLogin = async (token) => {
     }
 };
 
-export const showSuggestAccount = async (token, type) => {
+export const showSuggestAccount = async (token) => {
     try {
         const res = await httpRequest.get(`/user/suggestAccounts`, {
-            params: {
-                type,
-            },
             headers: { Authorization: 'Bearer ' + token },
         });
         return res;

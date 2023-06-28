@@ -120,6 +120,7 @@ function Header() {
                 const res = await showService.showMyUser(state.token);
                 setMyState(res.data.data);
                 dispatch(actions.setLogin(res.data.data ? true : false));
+                dispatch(actions.setId(res.data.data.id_user));
             };
             fetchApi();
         } else {
@@ -133,6 +134,7 @@ function Header() {
                 localStorage.removeItem('user');
                 dispatch(actions.setToken(null));
                 dispatch(actions.setLogin(false));
+                dispatch(actions.setId(null));
                 break;
             default:
         }

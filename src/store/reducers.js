@@ -8,6 +8,7 @@ const initstate = {
     volume: '0',
     theme: 'white',
     currentLogin: false,
+    currentId: null,
     ...localState,
 };
 
@@ -38,6 +39,22 @@ const reducers = (state = initstate, action) => {
                 ...state,
                 currentLogin: action.payload,
             };
+
+        case 'SET_ID':
+            return {
+                ...state,
+                currentId: action.payload,
+            };
+
+        case 'SET_FOLLOW':
+            fetchApi = async () => await contactVideoService.follow(state.token, action.payload);
+            fetchApi();
+            return state;
+
+        case 'SET_UNFOLLOW':
+            fetchApi = async () => await contactVideoService.unfollow(state.token, action.payload);
+            fetchApi();
+            return state;
 
         case 'SET_LIKE':
             fetchApi = async () =>

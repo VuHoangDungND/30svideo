@@ -6,9 +6,11 @@ import VideoList from '../VideoList';
 import * as showService from '~/services/showService';
 
 import styles from './UserVideos.module.scss';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 function UserVideos({ id_user }) {
+    const state = useSelector((state) => state.reducer);
     const [videosTab, setVideosTab] = useState(true);
     const [myvideoList, setMyVideoList] = useState([]);
 
@@ -43,7 +45,13 @@ function UserVideos({ id_user }) {
 
                 <div className={cx('bottom-line')}></div>
             </div>
-            {videosTab ? <VideoList data={myvideoList} /> : <VideoList data={myvideoList} />}
+            {videosTab ? (
+                <VideoList data={myvideoList} />
+            ) : id_user === state.currentId ? (
+                <VideoList data={myvideoList} />
+            ) : (
+                <div className={cx('warn')}> Video o che do private</div>
+            )}
         </div>
     );
 }

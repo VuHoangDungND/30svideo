@@ -11,6 +11,7 @@ import styles from './VideoInfo.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCheckCircle,
+    faCode,
     faComment,
     faDownload,
     faHeart,
@@ -20,13 +21,7 @@ import {
 import VideoItem from '../VideoItem';
 import AccountPreview from '~/components/AccountPreview';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-    faEmber,
-    faFacebook,
-    faInstagram,
-    faTelegram,
-    faTwitter,
-} from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faTelegram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import Menu from '../Popper/Menu';
 import { actions } from '~/store';
 
@@ -56,7 +51,7 @@ function VideoInfo({ data, callback, index }) {
 
     const shareMenu = [
         {
-            icon: <FontAwesomeIcon icon={faEmber} />,
+            icon: <FontAwesomeIcon icon={faCode} />,
             title: 'Embedded',
         },
         {
@@ -120,12 +115,10 @@ function VideoInfo({ data, callback, index }) {
         if (state.currentLogin) {
             if (state.currentLogin) {
                 if (videoInfo.follow_user) {
-                    //     dispatch(
-                    //         actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
-                    //     );
+                    dispatch(actions.setUnFollow(videoInfo.id_user));
                     setVideoInfo({ ...videoInfo, follow_user: false });
                 } else {
-                    //     dispatch(actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }));
+                    dispatch(actions.setFollow(videoInfo.id_user));
                     setVideoInfo({ ...videoInfo, follow_user: true });
                 }
             }
@@ -195,14 +188,16 @@ function VideoInfo({ data, callback, index }) {
                         <FontAwesomeIcon icon={faMusic} />
                         <div className={cx('music-name')}>{videoInfo.music}</div>
                     </h4>
-                    <Button
-                        outline={!videoInfo.follow_user}
-                        primary={videoInfo.follow_user}
-                        className={cx('follow-btn')}
-                        onClick={handleFollow}
-                    >
-                        {videoInfo.follow_user ? ' Following' : 'Follow'}
-                    </Button>
+                    {state.currentId === videoInfo.id_user ? null : (
+                        <Button
+                            outline={!videoInfo.follow_user}
+                            primary={videoInfo.follow_user}
+                            className={cx('follow-btn')}
+                            onClick={handleFollow}
+                        >
+                            {videoInfo.follow_user ? ' Following' : 'Follow'}
+                        </Button>
+                    )}
                 </div>
 
                 {/* phần video */}

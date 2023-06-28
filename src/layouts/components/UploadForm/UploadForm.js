@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import config from '~/config';
 
+import Loading from '~/components/Loading';
 import * as uploadService from '~/services/uploadService';
 import styles from './UploadForm.module.scss';
 
@@ -12,6 +13,7 @@ const cx = classNames.bind(styles);
 
 function UploadForm() {
     const [video, setVideo] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [videoInfo, setVideoInfo] = useState({
         description: '',
@@ -53,16 +55,20 @@ function UploadForm() {
         formData.append('info', JSON.stringify(videoInfo));
 
         const fetchApi = async () => {
+            setIsLoading(true);
             const res = await uploadService.uploadVideo(state.token, formData);
             console.log(res.data);
             alert(res.data.message);
             navigate(config.routes.home);
+
+            setIsLoading(false);
         };
         fetchApi();
     };
 
     return (
         <div className={cx('wrapper')}>
+            {isLoading ? <Loading /> : null}
             <div className={cx('upload-box')}>
                 {/* form upload video từ client lên sever */}
                 <form method="post" onSubmit={handleSubmit}>
