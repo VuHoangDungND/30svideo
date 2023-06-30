@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { actions } from '~/store';
 import * as showService from '~/services/showService';
 import MainPage from '~/layouts/components/MainPage';
-import { useSelector } from 'react-redux';
+import Loading from '~/components/Loading';
 
 function Home() {
-    const [videoList, setVideoList] = useState([]);
     const state = useSelector((state) => state.reducer);
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        // dispatch(actions.clearVideoList());
+    }, []);
+
+    console.log(state.currentVideoList);
     //lấy dữ liệu ở trang home
 
     useEffect(() => {
@@ -14,21 +22,28 @@ function Home() {
         if (state.currentLogin) {
             fetchApi = async () => {
                 const res = await showService.showHomeWithLogin(state.token);
-                setVideoList(res.data.data);
+                dispatch(actions.clearVideoList());
+                dispatch(actions.addVideoList(res.data.data));
                 console.log(1);
             };
         } else {
             fetchApi = async () => {
                 const res = await showService.showHome();
-                setVideoList(res.data.data);
+                dispatch(actions.clearVideoList());
+                dispatch(actions.addVideoList(res.data.data));
+
                 console.log(2);
             };
         }
 
-        fetchApi();
-    }, [state.token, state.currentLogin]);
+        if (state.currentLength === 0) fetchApi();
+    }, [state.token, state.currentLogin, state.currentLength, dispatch]);
 
-    return <MainPage videoList={videoList} />;
+    return (
+        <div>
+            {state.currentLoading ? <Loading /> : <MainPage videoList={state.currentVideoList} />}
+        </div>
+    );
 }
 
 export default Home;

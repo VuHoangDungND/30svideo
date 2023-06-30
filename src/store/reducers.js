@@ -9,6 +9,10 @@ const initstate = {
     theme: 'white',
     currentLogin: false,
     currentId: null,
+    currentVideoList: [],
+    currentIndex: 0,
+    currentLength: 0,
+    currentLoading: false,
     ...localState,
 };
 
@@ -86,6 +90,27 @@ const reducers = (state = initstate, action) => {
             fetchApi();
             return state;
 
+        case 'ADD_VIDEOLIST':
+            console.log(action.payload);
+            return {
+                ...state,
+                currentVideoList: [...state.currentVideoList, ...action.payload],
+                currentLength: state.currentLength + 5,
+            };
+
+        case 'CLEAR_VIDEOLIST':
+            return {
+                ...state,
+                currentVideoList: [],
+                currentIndex: 0,
+                currentLength: 0,
+            };
+
+        case 'SET_LOADING':
+            return {
+                ...state,
+                currentLoading: action.payload,
+            };
         default:
             return state;
     }

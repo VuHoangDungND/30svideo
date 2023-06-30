@@ -74,3 +74,24 @@ export const setShare = (state) => {
         payload: state,
     };
 };
+
+export const addVideoList = (state) => {
+    return {
+        type: 'ADD_VIDEOLIST',
+        payload: state,
+    };
+};
+
+export const clearVideoList = (state) => {
+    return {
+        type: 'CLEAR_VIDEOLIST',
+        payload: state,
+    };
+};
+
+export const setLoading = (state) => {
+    return {
+        type: 'SET_LOADING',
+        payload: state,
+    };
+};

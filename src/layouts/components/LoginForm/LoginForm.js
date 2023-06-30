@@ -43,6 +43,7 @@ function LoginForm() {
             else {
                 dispatch(actions.setToken(res.data.token));
                 dispatch(actions.setLogin(true));
+                dispatch(actions.clearVideoList());
                 localStorage.setItem(
                     'user',
                     JSON.stringify({ token: res.data.token, theme: state.theme }),

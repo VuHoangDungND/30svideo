@@ -117,10 +117,12 @@ function Header() {
     useEffect(() => {
         if (state.token) {
             const fetchApi = async () => {
+                dispatch(actions.setLoading(true));
                 const res = await showService.showMyUser(state.token);
                 setMyState(res.data.data);
                 dispatch(actions.setLogin(res.data.data ? true : false));
                 dispatch(actions.setId(res.data.data.id_user));
+                dispatch(actions.setLoading(false));
             };
             fetchApi();
         } else {
@@ -135,6 +137,7 @@ function Header() {
                 dispatch(actions.setToken(null));
                 dispatch(actions.setLogin(false));
                 dispatch(actions.setId(null));
+                dispatch(actions.clearVideoList());
                 break;
             default:
         }

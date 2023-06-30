@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import fileDownload from 'js-file-download';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './VideoInfo.module.scss';
@@ -132,27 +134,42 @@ function VideoInfo({ data, callback, index }) {
 
     //handle like video
     const handleLikeVideo = () => {
-        if (videoInfo.like_video) {
-            dispatch(
-                actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
-            );
-            setVideoInfo({ ...videoInfo, like_video: false, likes: videoInfo.likes - 1 });
-        } else {
-            dispatch(actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }));
-            setVideoInfo({ ...videoInfo, like_video: true, likes: videoInfo.likes + 1 });
-        }
+        if (state.currentLogin) {
+            if (videoInfo.like_video) {
+                dispatch(
+                    actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
+                );
+                setVideoInfo({ ...videoInfo, like_video: false, likes: videoInfo.likes - 1 });
+            } else {
+                dispatch(
+                    actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
+                );
+                setVideoInfo({ ...videoInfo, like_video: true, likes: videoInfo.likes + 1 });
+            }
+        } else alert('Please login to like video');
     };
 
     //handle download video
     const handleDownload = () => {
-        dispatch(actions.setDownload({ id_video: videoInfo.id_video }));
-        setVideoInfo({ ...videoInfo, download: videoInfo.download + 1 });
+        if (state.currentLogin) {
+            axios
+                .get(videoInfo.video_url, {
+                    responseType: 'blob',
+                })
+                .then((res) => {
+                    fileDownload(res.data, `${videoInfo.id_video}.mp4`);
+                });
+            dispatch(actions.setDownload({ id_video: videoInfo.id_video }));
+            setVideoInfo({ ...videoInfo, download: videoInfo.download + 1 });
+        } else alert('Please login to download video');
     };
 
     //handle share video
     const handleShare = () => {
-        dispatch(actions.setShare({ id_video: videoInfo.id_video }));
-        setVideoInfo({ ...videoInfo, share: videoInfo.share + 1 });
+        if (state.currentLogin) {
+            dispatch(actions.setShare({ id_video: videoInfo.id_video }));
+            setVideoInfo({ ...videoInfo, share: videoInfo.share + 1 });
+        } else alert('Please login to share video');
     };
 
     return (
@@ -230,14 +247,9 @@ function VideoInfo({ data, callback, index }) {
                         </div>
 
                         <div className={cx('btn-item')}>
-                            <a
-                                className={cx('icon-wrapper')}
-                                href={videoInfo.video_url}
-                                download
-                                onClick={handleDownload}
-                            >
+                            <span className={cx('icon-wrapper')} onClick={handleDownload}>
                                 <FontAwesomeIcon icon={faDownload} className={cx('icon')} />
-                            </a>
+                            </span>
 
                             <span className={cx('text')}>{videoInfo.download}</span>
                         </div>
