@@ -26,13 +26,6 @@ export const setLogin = (state) => {
     };
 };
 
-export const setId = (state) => {
-    return {
-        type: 'SET_ID',
-        payload: state,
-    };
-};
-
 export const setFollow = (state) => {
     return {
         type: 'SET_FOLLOW',
@@ -82,6 +75,13 @@ export const addVideoList = (state) => {
     };
 };
 
+export const setCurrentIndex = (state) => {
+    return {
+        type: 'SET_CURRENT_INDEX',
+        payload: state,
+    };
+};
+
 export const clearVideoList = (state) => {
     return {
         type: 'CLEAR_VIDEOLIST',
@@ -92,6 +92,20 @@ export const clearVideoList = (state) => {
 export const setLoading = (state) => {
     return {
         type: 'SET_LOADING',
+        payload: state,
+    };
+};
+
+export const setLocationVideo = (state) => {
+    return {
+        type: 'SET_LOCATION_VIDEO',
+        payload: state,
+    };
+};
+
+export const setSuggestAccount = (state) => {
+    return {
+        type: 'SET_SUGGEST_ACCOUNT',
         payload: state,
     };
 };

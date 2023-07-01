@@ -41,12 +41,23 @@ function LoginForm() {
             const res = await loginService.login(userData);
             if (res.data.token === null) alert(res.data.message);
             else {
-                dispatch(actions.setToken(res.data.token));
+                dispatch(
+                    actions.setToken({
+                        token: res.data.token,
+                        exp: res.data.exp,
+                        currentId: res.data.id_user,
+                    }),
+                );
                 dispatch(actions.setLogin(true));
                 dispatch(actions.clearVideoList());
                 localStorage.setItem(
                     'user',
-                    JSON.stringify({ token: res.data.token, theme: state.theme }),
+                    JSON.stringify({
+                        token: res.data.token,
+                        theme: state.theme,
+                        exp: res.data.exp,
+                        currentId: res.data.id_user,
+                    }),
                 );
                 navigate(config.routes.home);
                 alert(res.data.message);

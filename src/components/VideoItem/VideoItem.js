@@ -12,21 +12,26 @@ import { actions } from '~/store';
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ data, isInView }) {
+function VideoItem({ data, index }) {
     const state = useSelector((state) => state.reducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [isPlaying, setIsPlaying] = useState(isInView);
+    const [isPlaying, setIsPlaying] = useState(state.currentIndex === index);
 
     const handlePlay = (e) => {
         e.stopPropagation();
         setIsPlaying(!isPlaying);
     };
 
+    const handleClickOnVideo = () => {
+        navigate(`/@${data.id_user}/video/${data.id_video}`);
+        dispatch(actions.setCurrentIndex(index));
+    };
+
     useEffect(() => {
-        setIsPlaying(isInView);
-    }, [isInView]);
+        setIsPlaying(state.currentIndex === index);
+    }, [state.currentIndex, index]);
 
     return (
         <div className={cx('wrapper')}>
@@ -40,10 +45,7 @@ function VideoItem({ data, isInView }) {
                 playsinline
             />
 
-            <div
-                className={cx('cover')}
-                onClick={() => navigate(`/@${data.id_user}/video/${data.id_video}`)}
-            >
+            <div className={cx('cover')} onClick={handleClickOnVideo}>
                 <button className={cx('icon-play')} onClick={(e) => handlePlay(e)}>
                     {isPlaying ? (
                         <FontAwesomeIcon icon={faPause} />
@@ -88,5 +90,5 @@ export default VideoItem;
 
 VideoItem.propTypes = {
     data: PropTypes.object.isRequired,
-    isInView: PropTypes.bool,
+    index: PropTypes.number.isRequired,
 };

@@ -57,7 +57,6 @@ function UploadForm() {
         const fetchApi = async () => {
             setIsLoading(true);
             const res = await uploadService.uploadVideo(state.token, formData);
-            console.log(res.data);
             alert(res.data.message);
             navigate(config.routes.home);
 

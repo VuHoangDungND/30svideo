@@ -29,18 +29,28 @@ import { actions } from '~/store';
 
 const cx = classNames.bind(styles);
 
-function VideoInfo({ data, callback, index }) {
+function VideoInfo({ data, index }) {
     const state = useSelector((state) => state.reducer);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [isInView, setIsInView] = useState(false);
     const [videoInfo, setVideoInfo] = useState({
         ...data,
         follow_user: data.follow_user === 1,
         like_video: data.like_video === 1,
     });
 
+    useEffect(() => {
+        dispatch(
+            actions.setLocationVideo({
+                index: index,
+                location:
+                    viewRef.current.offsetTop + viewRef.current.offsetHeight - window.innerHeight,
+            }),
+        );
+    }, [dispatch, index]);
+
+    // Du lieu video khi nhap video vao
     useEffect(() => {
         setVideoInfo({
             ...data,
@@ -82,14 +92,7 @@ function VideoInfo({ data, callback, index }) {
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                setIsInView(entry.isIntersecting);
-                callback(
-                    viewRef.current.offsetTop +
-                        viewRef.current.offsetHeight -
-                        window.visualViewport.height,
-                    entry.isIntersecting,
-                    index,
-                );
+                if (entry.isIntersecting) dispatch(actions.setCurrentIndex(index));
             },
             { threshold: 0, rootMargin: '-49.9% 0px -49.9% 0px ' },
         );
@@ -99,7 +102,7 @@ function VideoInfo({ data, callback, index }) {
         return () => {
             observer.disconnect();
         };
-    }, [callback, index]);
+    }, [dispatch, index]);
 
     //Render tippy
     const renderPreview = (props) => {
@@ -118,10 +121,8 @@ function VideoInfo({ data, callback, index }) {
             if (state.currentLogin) {
                 if (videoInfo.follow_user) {
                     dispatch(actions.setUnFollow(videoInfo.id_user));
-                    setVideoInfo({ ...videoInfo, follow_user: false });
                 } else {
                     dispatch(actions.setFollow(videoInfo.id_user));
-                    setVideoInfo({ ...videoInfo, follow_user: true });
                 }
             }
         } else alert('Đăng nhập để sử dụng tính năng trên');
@@ -130,6 +131,7 @@ function VideoInfo({ data, callback, index }) {
     // handle comment
     const handleComment = () => {
         navigate(`/@${videoInfo.id_user}/video/${videoInfo.id_video}`);
+        dispatch(actions.setCurrentIndex(index));
     };
 
     //handle like video
@@ -139,12 +141,10 @@ function VideoInfo({ data, callback, index }) {
                 dispatch(
                     actions.setUnLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
                 );
-                setVideoInfo({ ...videoInfo, like_video: false, likes: videoInfo.likes - 1 });
             } else {
                 dispatch(
                     actions.setLike({ id_user: videoInfo.id_user, id_video: videoInfo.id_video }),
                 );
-                setVideoInfo({ ...videoInfo, like_video: true, likes: videoInfo.likes + 1 });
             }
         } else alert('Please login to like video');
     };
@@ -159,16 +159,14 @@ function VideoInfo({ data, callback, index }) {
                 .then((res) => {
                     fileDownload(res.data, `${videoInfo.id_video}.mp4`);
                 });
-            dispatch(actions.setDownload({ id_video: videoInfo.id_video }));
-            setVideoInfo({ ...videoInfo, download: videoInfo.download + 1 });
+            dispatch(actions.setDownload(videoInfo.id_video));
         } else alert('Please login to download video');
     };
 
     //handle share video
     const handleShare = () => {
         if (state.currentLogin) {
-            dispatch(actions.setShare({ id_video: videoInfo.id_video }));
-            setVideoInfo({ ...videoInfo, share: videoInfo.share + 1 });
+            dispatch(actions.setShare(videoInfo.id_video));
         } else alert('Please login to share video');
     };
 
@@ -192,7 +190,12 @@ function VideoInfo({ data, callback, index }) {
                                     className={cx('user-nickname')}
                                 >
                                     {videoInfo.nickname}
-                                    <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
+                                    {videoInfo.tick && (
+                                        <FontAwesomeIcon
+                                            className={cx('check')}
+                                            icon={faCheckCircle}
+                                        />
+                                    )}
                                 </Link>
                             </Tippy>
                         </div>
@@ -220,7 +223,7 @@ function VideoInfo({ data, callback, index }) {
                 {/* phần video */}
                 <div className={cx('video-content')}>
                     <div className={cx('video')}>
-                        <VideoItem data={videoInfo} isInView={isInView} />
+                        <VideoItem data={videoInfo} index={index} />
                     </div>
 
                     {/* icon bên phải video */}
@@ -272,7 +275,6 @@ function VideoInfo({ data, callback, index }) {
 
 VideoInfo.propTypes = {
     data: PropTypes.object.isRequired,
-    callback: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
 };
 

@@ -13,3 +13,18 @@ export const watch = async (id_user, id_video) => {
         console.log(error);
     }
 };
+
+export const watchWithLogin = async (token, id_user, id_video) => {
+    try {
+        const res = await httpRequest.get(`/user/watch`, {
+            params: {
+                id_user,
+                id_video,
+            },
+            headers: { Authorization: 'Bearer ' + token },
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};

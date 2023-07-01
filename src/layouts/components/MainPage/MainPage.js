@@ -1,83 +1,121 @@
-import { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import VideoInfo from '~/components/VideoInfo';
+import { actions } from '~/store';
+import * as showService from '~/services/showService';
 
-function MainPage({ videoList }) {
-    const list = useRef([]);
+function MainPage() {
+    const state = useSelector((state) => state.reducer);
+    const dispatch = useDispatch();
 
-    // lấy dữ liệu vị trí của các componnet con
-    const handlePushList = (top, isView, index) => {
-        let isJoin = false;
-        isJoin = list.current.every((item) => {
-            return item.index !== index;
-        });
-
-        if (isJoin) {
-            list.current.push({ index, isView, top });
-        } else {
-            list.current.forEach((item) => {
-                if (item.index === index) {
-                    item.isView = isView;
-                    item.top = top;
-                }
-            });
-        }
-    };
-
-    //di chuyển khi bấm phím
+    //lấy dữ liệu ở trang home khi moi vao
     useEffect(() => {
-        window.handleMoveToVideo = function (event) {
-            event.preventDefault();
-            let [videoPlaying] = list.current.filter((item) => {
-                return item.isView === true;
+        let fetchApi;
+        if (state.currentLogin) {
+            fetchApi = async () => {
+                const res = await showService.showHomeWithLogin(state.token);
+                dispatch(actions.addVideoList(res.data.data));
+            };
+        } else {
+            fetchApi = async () => {
+                const res = await showService.showHome();
+                dispatch(actions.addVideoList(res.data.data));
+            };
+        }
+
+        if (state.currentLength === 0) fetchApi();
+    }, [state.token, state.currentLogin, state.currentLength, dispatch]);
+
+    useEffect(() => {
+        if (state.currentVideoList[state.currentIndex])
+            window.scrollTo({
+                top: state.currentVideoList[state.currentIndex].location,
             });
-            let nextVideo;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // load video when scroll to max height
+    const loadMoreVideo = useCallback(async () => {
+        let res;
+        if (state.currentLogin) res = await showService.showHomeWithLogin(state.token);
+        else res = await showService.showHome();
+        dispatch(actions.addVideoList(res.data.data));
+    }, [dispatch, state.token, state.currentLogin]);
+
+    //handle scroll
+    let handleScroll = useCallback(
+        (e) => {
+            if (
+                window.innerHeight + e.target.documentElement.scrollTop >=
+                e.target.documentElement.scrollHeight
+            ) {
+                loadMoreVideo();
+            }
+        },
+        [loadMoreVideo],
+    );
+
+    //add event listeners
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [handleScroll]);
+
+    // handle move to next video
+    const handleMoveToVideo = useCallback(
+        (event) => {
+            event.preventDefault();
+            let nextVideo = state.currentVideoList[state.currentIndex];
             switch (event.keyCode) {
                 case 40:
-                    if (videoPlaying.index === list.length - 1) nextVideo = videoPlaying;
-                    else {
-                        [nextVideo] = list.current.filter((item) => {
-                            return item.index === videoPlaying.index + 1;
-                        });
+                    if (state.currentIndex !== state.currentLength - 1) {
+                        nextVideo = state.currentVideoList[state.currentIndex + 1];
+                        dispatch(actions.setCurrentIndex(state.currentIndex + 1));
                     }
+                    window.scrollTo({
+                        top: nextVideo.location,
+                        behavior: 'smooth',
+                    });
                     break;
+
                 case 38:
-                    if (videoPlaying.index === 0) nextVideo = videoPlaying;
-                    else {
-                        [nextVideo] = list.current.filter((item) => {
-                            return item.index === videoPlaying.index - 1;
-                        });
+                    if (state.currentIndex !== 0) {
+                        nextVideo = state.currentVideoList[state.currentIndex - 1];
+                        dispatch(actions.setCurrentIndex(state.currentIndex - 1));
                     }
+                    window.scrollTo({
+                        top: nextVideo.location,
+                        behavior: 'smooth',
+                    });
                     break;
+
                 default:
                     break;
             }
+        },
+        [dispatch, state.currentIndex, state.currentLength, state.currentVideoList],
+    );
 
-            if (nextVideo)
-                window.scrollTo({
-                    top: nextVideo.top,
-                    behavior: 'smooth',
-                });
-        };
+    //add event listeners
+    useEffect(() => {
+        window.addEventListener('keyup', handleMoveToVideo);
 
-        window.addEventListener('keyup', window.handleMoveToVideo);
         return () => {
-            window.removeEventListener('keyup', window.handleMoveToVideo);
-            delete window.handleNextVideo;
+            window.removeEventListener('keyup', handleMoveToVideo);
         };
-    }, [list]);
+    }, [handleMoveToVideo]);
 
     return (
         <>
-            {videoList.map((result, index) => (
-                <VideoInfo data={result} key={index} callback={handlePushList} index={index} />
+            {state.currentVideoList.map((result, index) => (
+                <VideoInfo data={result} key={index} index={index} />
             ))}
         </>
     );
 }
 
-MainPage.propTypes = {
-    videoList: PropTypes.array.isRequired,
-};
 export default MainPage;

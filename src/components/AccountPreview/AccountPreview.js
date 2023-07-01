@@ -6,21 +6,25 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import styles from './AccountPreview.module.scss';
 import Image from '~/components/Image';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 function AccountPreview({ data }) {
+    const state = useSelector((state) => state.reducer);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
                 <Image className={cx('avatar')} src={data.avatar} alt="" />
-                <Button
-                    className={cx('follow-btn')}
-                    primary={data.follow_user === 1}
-                    outline={!data.follow_user === 1}
-                >
-                    {data.follow_user ? 'Following' : 'Follow'}
-                </Button>
+                {state.currentId === data.id_user ? null : (
+                    <Button
+                        className={cx('follow-btn')}
+                        primary={data.follow_user === 1}
+                        outline={!(data.follow_user === 1)}
+                    >
+                        {data.follow_user ? 'Following' : 'Follow'}
+                    </Button>
+                )}
             </div>
             <div className={cx('body')}>
                 <div className={cx('nickname')}>

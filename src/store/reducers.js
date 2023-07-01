@@ -1,10 +1,17 @@
 import * as contactVideoService from '~/services/contactVideoService';
 
 //initial state
-const localState = JSON.parse(localStorage.getItem('user'));
+let localState = JSON.parse(localStorage.getItem('user'));
+if (localState) {
+    const exptime = localState.exp;
+    if (exptime * 1000 < new Date().getTime()) {
+        localState = { ...localState, exp: null, token: null };
+    } else localState = { ...localState, currentLogin: true };
+}
 
 const initstate = {
     token: null,
+    exp: 0,
     volume: '0',
     theme: 'white',
     currentLogin: false,
@@ -13,10 +20,11 @@ const initstate = {
     currentIndex: 0,
     currentLength: 0,
     currentLoading: false,
+    currentSuggestAccount: [],
     ...localState,
 };
 
-let fetchApi;
+let fetchApi, videoList, listAccounts;
 
 const reducers = (state = initstate, action) => {
     switch (action.type) {
@@ -35,7 +43,9 @@ const reducers = (state = initstate, action) => {
         case 'SET_TOKEN':
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.token,
+                exp: action.payload.exp,
+                currentId: action.payload.currentId,
             };
 
         case 'SET_LOGIN':
@@ -44,21 +54,54 @@ const reducers = (state = initstate, action) => {
                 currentLogin: action.payload,
             };
 
-        case 'SET_ID':
-            return {
-                ...state,
-                currentId: action.payload,
-            };
-
         case 'SET_FOLLOW':
             fetchApi = async () => await contactVideoService.follow(state.token, action.payload);
             fetchApi();
-            return state;
+
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video) => {
+                if (video.id_user === action.payload)
+                    return { ...video, follow_user: 1, followed: video.followed + 1 };
+                else return video;
+            });
+            videoList = videoList.map((video) => {
+                if (video.id_user === state.currentId)
+                    return { ...video, following: video.following + 1 };
+                else return video;
+            });
+
+            listAccounts = state.currentSuggestAccount;
+            listAccounts = listAccounts.map((account) => {
+                if (account.id_user === action.payload)
+                    return { ...account, follow_user: 1, followed: account.followed + 1 };
+                else return account;
+            });
+
+            return { ...state, currentVideoList: videoList, currentSuggestAccount: listAccounts };
 
         case 'SET_UNFOLLOW':
             fetchApi = async () => await contactVideoService.unfollow(state.token, action.payload);
             fetchApi();
-            return state;
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video) => {
+                if (video.id_user === action.payload)
+                    return { ...video, follow_user: 0, followed: video.followed - 1 };
+                else return video;
+            });
+            videoList = videoList.map((video) => {
+                if (video.id_user === state.currentId)
+                    return { ...video, following: video.following - 1 };
+                else return video;
+            });
+
+            listAccounts = state.currentSuggestAccount;
+            listAccounts = listAccounts.map((account) => {
+                if (account.id_user === action.payload)
+                    return { ...account, follow_user: 0, followed: account.followed - 1 };
+                else return account;
+            });
+
+            return { ...state, currentVideoList: videoList, currentSuggestAccount: listAccounts };
 
         case 'SET_LIKE':
             fetchApi = async () =>
@@ -68,7 +111,26 @@ const reducers = (state = initstate, action) => {
                     action.payload.id_video,
                 );
             fetchApi();
-            return state;
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video) => {
+                if (video.id_video === action.payload.id_video)
+                    return { ...video, like_video: 1, likes: video.likes + 1 };
+                else return video;
+            });
+            videoList = videoList.map((video) => {
+                if (video.id_user === action.payload.id_user)
+                    return { ...video, total_likes: video.total_likes + 1 };
+                else return video;
+            });
+
+            listAccounts = state.currentSuggestAccount;
+            listAccounts = listAccounts.map((account) => {
+                if (account.id_user === action.payload.id_user)
+                    return { ...account, total_likes: account.total_likes + 1 };
+                else return account;
+            });
+
+            return { ...state, currentVideoList: videoList, currentSuggestAccount: listAccounts };
 
         case 'SET_UNLIKE':
             fetchApi = async () =>
@@ -78,24 +140,61 @@ const reducers = (state = initstate, action) => {
                     action.payload.id_video,
                 );
             fetchApi();
-            return state;
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video) => {
+                if (video.id_video === action.payload.id_video)
+                    return { ...video, like_video: 0, likes: video.likes - 1 };
+                else return video;
+            });
+            videoList = videoList.map((video) => {
+                if (video.id_user === action.payload.id_user)
+                    return { ...video, total_likes: video.total_likes - 1 };
+                else return video;
+            });
+
+            listAccounts = state.currentSuggestAccount;
+            listAccounts = listAccounts.map((account) => {
+                if (account.id_user === action.payload.id_user)
+                    return { ...account, total_likes: account.total_likes - 1 };
+                else return account;
+            });
+
+            return { ...state, currentVideoList: videoList, currentSuggestAccount: listAccounts };
 
         case 'SET_DOWNLOAD':
-            fetchApi = async () => await contactVideoService.download(action.payload.id_video);
+            fetchApi = async () => await contactVideoService.download(action.payload);
             fetchApi();
-            return state;
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video) => {
+                if (video.id_video === action.payload)
+                    return { ...video, download: video.download + 1 };
+                else return video;
+            });
+
+            return { ...state, currentVideoList: videoList };
 
         case 'SET_SHARE':
-            fetchApi = async () => await contactVideoService.share(action.payload.id_video);
+            fetchApi = async () => await contactVideoService.share(action.payload);
             fetchApi();
-            return state;
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video) => {
+                if (video.id_video === action.payload) return { ...video, share: video.share + 1 };
+                else return video;
+            });
+
+            return { ...state, currentVideoList: videoList };
 
         case 'ADD_VIDEOLIST':
-            console.log(action.payload);
             return {
                 ...state,
                 currentVideoList: [...state.currentVideoList, ...action.payload],
                 currentLength: state.currentLength + 5,
+            };
+
+        case 'SET_CURRENT_INDEX':
+            return {
+                ...state,
+                currentIndex: action.payload,
             };
 
         case 'CLEAR_VIDEOLIST':
@@ -104,6 +203,7 @@ const reducers = (state = initstate, action) => {
                 currentVideoList: [],
                 currentIndex: 0,
                 currentLength: 0,
+                currentSuggestAccount: [],
             };
 
         case 'SET_LOADING':
@@ -111,6 +211,25 @@ const reducers = (state = initstate, action) => {
                 ...state,
                 currentLoading: action.payload,
             };
+
+        case 'SET_LOCATION_VIDEO':
+            videoList = state.currentVideoList;
+            videoList = videoList.map((video, index) => {
+                if (action.payload.index === index) {
+                    return { ...video, location: action.payload.location };
+                } else return video;
+            });
+            return {
+                ...state,
+                currentVideoList: videoList,
+            };
+
+        case 'SET_SUGGEST_ACCOUNT':
+            return {
+                ...state,
+                currentSuggestAccount: action.payload,
+            };
+
         default:
             return state;
     }

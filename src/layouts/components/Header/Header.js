@@ -121,7 +121,6 @@ function Header() {
                 const res = await showService.showMyUser(state.token);
                 setMyState(res.data.data);
                 dispatch(actions.setLogin(res.data.data ? true : false));
-                dispatch(actions.setId(res.data.data.id_user));
                 dispatch(actions.setLoading(false));
             };
             fetchApi();
@@ -134,9 +133,8 @@ function Header() {
         switch (menuItem.title) {
             case 'Log out':
                 localStorage.removeItem('user');
-                dispatch(actions.setToken(null));
+                dispatch(actions.setToken({ token: null, exp: null, currentId: null }));
                 dispatch(actions.setLogin(false));
-                dispatch(actions.setId(null));
                 dispatch(actions.clearVideoList());
                 break;
             default:

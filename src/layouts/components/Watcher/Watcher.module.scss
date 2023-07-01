@@ -66,6 +66,27 @@
     }
 }
 
+.icon-up,
+.icon-down {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border-radius: 50%;
+    background: var(--border-icon);
+    cursor: pointer;
+    z-index: 100;
+    right: 10px;
+}
+
+.icon-up {
+    bottom: 52%;
+}
+
+.icon-down {
+    top: 52%;
+}
+
 .icon-play {
     width: 100%;
     height: 100%;
@@ -217,8 +238,8 @@
     flex-direction: row;
     -webkit-box-align: center;
     align-items: center;
+    justify-content: space-between;
     padding: 0 32px;
-    margin-bottom: 15px;
     position: relative;
     flex: 0 0 82px;
 }
@@ -328,6 +349,10 @@
     background-color: var(--border-icon);
     padding: 6px;
     margin-right: 6px;
+}
+
+.icon.like {
+    color: red;
 }
 
 .icon-video-text {
