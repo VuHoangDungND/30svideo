@@ -5,7 +5,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountPreview from '~/components/AccountPreview';
 import AccountItem from '~/components/AccountItem';
 
-function Account({ data, suggested = false, watcher = false }) {
+function Account({ data, suggested = false, watcher = false, comment = false }) {
     //Render tippy
     const renderPreview = (props) => {
         return (
@@ -33,6 +33,7 @@ function Account({ data, suggested = false, watcher = false }) {
                         data={data}
                         suggested={suggested}
                         watcher={watcher}
+                        comment={comment}
                     />
                 </div>
             </Tippy>

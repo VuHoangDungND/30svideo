@@ -9,6 +9,8 @@ function MainPage() {
     const state = useSelector((state) => state.reducer);
     const dispatch = useDispatch();
 
+    console.log(state.currentIndex, state.currentVideoList);
+
     //lấy dữ liệu ở trang home khi moi vao
     useEffect(() => {
         let fetchApi;
@@ -47,7 +49,7 @@ function MainPage() {
     let handleScroll = useCallback(
         (e) => {
             if (
-                window.innerHeight + e.target.documentElement.scrollTop >=
+                window.innerHeight + e.target.documentElement.scrollTop + 1 >=
                 e.target.documentElement.scrollHeight
             ) {
                 loadMoreVideo();

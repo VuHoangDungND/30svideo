@@ -81,3 +81,16 @@ export const showVideos = async (id_user) => {
         console.log(error);
     }
 };
+
+export const showComments = async (id_video) => {
+    try {
+        const res = await httpRequest.get(`/comments`, {
+            params: {
+                id_video,
+            },
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};

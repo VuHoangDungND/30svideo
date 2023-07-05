@@ -28,6 +28,7 @@ import Account from '~/components/Account';
 import * as watchService from '~/services/watchService';
 import config from '~/config';
 import Button from '~/components/Button';
+import Comment from '../Comment';
 
 const cx = classNames.bind(styles);
 
@@ -125,10 +126,10 @@ function Watcher() {
             if (state.currentLogin) {
                 if (data.follow_user) {
                     dispatch(actions.setUnFollow(data.id_user));
-                    setData({ ...data, follow_user: false });
+                    setData({ ...data, follow_user: false, followed: data.followed - 1 });
                 } else {
                     dispatch(actions.setFollow(data.id_user));
-                    setData({ ...data, follow_user: true });
+                    setData({ ...data, follow_user: true, followed: data.followed + 1 });
                 }
             }
         } else alert('Đăng nhập để sử dụng tính năng trên');
@@ -342,68 +343,7 @@ function Watcher() {
                     </div>
                 </div>
 
-                <div className={cx('comment-container')}>
-                    <div className={cx('comment-list-container')}>
-                        <div className={cx('comment-item-container')}>
-                            <div className={cx('comment-content-container')}>
-                                <Account data={data} watcher />
-                                <p className="comment-text">{data.description}</p>
-                                <p className="comment-subtext">
-                                    <span className={cx('comment-time')}>12h</span>
-                                    <span className={cx('comment-reply')}>reply</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className={cx('comment-item-container')}>
-                            <div className={cx('comment-content-container')}>
-                                <Account data={data} watcher />
-                                <p className="comment-text">{data.description}</p>
-                                <p className="comment-subtext">
-                                    <span className={cx('comment-time')}>12h</span>
-                                    <span className={cx('comment-reply')}>reply</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className={cx('comment-item-container')}>
-                            <div className={cx('comment-content-container')}>
-                                <Account data={data} watcher />
-                                <p className="comment-text">{data.description}</p>
-                                <p className="comment-subtext">
-                                    <span className={cx('comment-time')}>12h</span>
-                                    <span className={cx('comment-reply')}>reply</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className={cx('comment-item-container')}>
-                            <div className={cx('comment-content-container')}>
-                                <Account data={data} watcher />
-                                <p className="comment-text">{data.description}</p>
-                                <p className="comment-subtext">
-                                    <span className={cx('comment-time')}>12h</span>
-                                    <span className={cx('comment-reply')}>reply</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className={cx('comment-item-container')}>
-                            <div className={cx('comment-content-container')}>
-                                <Account data={data} watcher />
-                                <p className="comment-text">{data.description}</p>
-                                <p className="comment-subtext">
-                                    <span className={cx('comment-time')}>12h</span>
-                                    <span className={cx('comment-reply')}>reply</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={cx('bottom-comment-container')}>
-                    <div className={cx('comment-bar')}>Here to comment</div>
-                </div>
+                <Comment id_video={data.id_video} />
             </div>
         </div>
     );

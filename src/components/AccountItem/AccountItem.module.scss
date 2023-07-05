@@ -11,10 +11,18 @@
     }
 }
 
-.wrapper.watcher {
-    &:hover ~ .wrapper {
+.wrapper.watcher :hover {
+    .nickname {
         color: red;
         text-decoration: underline;
+    }
+}
+
+.wrapper.comment {
+    .info {
+        padding: 0 12px 0 12px;
+        background-color: var(--border-icon);
+        border-radius: 10px;
     }
 }
 
@@ -26,6 +34,8 @@
 }
 
 .info {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     margin-left: 12px;
 }
