@@ -50,7 +50,7 @@ function UserVideos({ id_user }) {
             ) : id_user === state.currentId ? (
                 <VideoList data={myvideoList} />
             ) : (
-                <div className={cx('warn')}> Video o che do private</div>
+                <div className={cx('warn')}> Video ở chế độ private</div>
             )}
         </div>
     );

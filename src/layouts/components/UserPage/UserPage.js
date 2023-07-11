@@ -12,6 +12,7 @@ import styles from './UserPage.module.scss';
 import Button from '~/components/Button';
 import UserVideos from '../UserVideos';
 import { actions } from '~/store';
+import EditUser from '~/components/EditUser';
 
 const cx = classNames.bind(styles);
 function UserPage() {
@@ -19,6 +20,8 @@ function UserPage() {
     const [data, setData] = useState({});
     const location = useLocation();
     const state = useSelector((state) => state.reducer);
+
+    const [isEditor, setIsEditor] = useState(false);
 
     //lấy dữ liệu dựa trên nickname
     useEffect(() => {
@@ -55,11 +58,12 @@ function UserPage() {
     };
 
     const handleEdit = () => {
-        alert('Tinh nang dang trong qua trinh bao tri');
+        setIsEditor(true);
     };
 
     return (
         <div className={cx('wrapper')}>
+            {isEditor ? <EditUser data={data} handleCancel={setIsEditor} /> : null}
             <div className={cx('content')}>
                 <div className={cx('header')}>
                     <div className={cx('user-info')}>

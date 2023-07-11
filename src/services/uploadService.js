@@ -10,3 +10,14 @@ export const uploadVideo = async (token, formData) => {
         console.log(error);
     }
 };
+
+export const uploadImage = async (token, formData) => {
+    try {
+        const res = await httpRequest.post(`/user/uploadImage`, formData, {
+            headers: { Authorization: 'Bearer ' + token },
+        });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
