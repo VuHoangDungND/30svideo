@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Button';
@@ -39,14 +39,22 @@ function EditUser({ data, handleCancel }) {
         };
         fetchApi();
     };
+
     //handle edit
     const handleEdit = (e) => {
         const file = e.target.files[0];
 
+        console.log(file);
         file.preview = URL.createObjectURL(file);
 
         setImage(file);
     };
+
+    useEffect(() => {
+        return () => {
+            image && URL.revokeObjectURL(image);
+        };
+    }, [image]);
 
     //handle change
     const handleChange = (e) => {
@@ -74,7 +82,6 @@ function EditUser({ data, handleCancel }) {
                                 name="image"
                                 id="file"
                                 accept="image/*"
-                                required
                                 hidden
                             />
                             {image ? (

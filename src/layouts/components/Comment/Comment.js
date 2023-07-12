@@ -30,7 +30,6 @@ function Comment({ id_video }) {
         socket.current = io(host);
 
         socket.current.on('sendDataServer', (dataGot) => {
-            console.log([...oldMsgs, dataGot.newData]);
             setOldMsgs((oldMsgs) => [...oldMsgs, dataGot.newData]);
         });
 

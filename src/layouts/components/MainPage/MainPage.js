@@ -9,8 +9,6 @@ function MainPage() {
     const state = useSelector((state) => state.reducer);
     const dispatch = useDispatch();
 
-    console.log(state.currentIndex, state.currentVideoList);
-
     //lấy dữ liệu ở trang home khi moi vao
     useEffect(() => {
         let fetchApi;

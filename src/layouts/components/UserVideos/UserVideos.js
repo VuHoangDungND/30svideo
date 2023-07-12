@@ -46,7 +46,11 @@ function UserVideos({ id_user }) {
                 <div className={cx('bottom-line')}></div>
             </div>
             {videosTab ? (
-                <VideoList data={myvideoList} />
+                myvideoList.length === 0 ? (
+                    <div className={cx('warn')}> Người dùng này chưa đăng video nào</div>
+                ) : (
+                    <VideoList data={myvideoList} />
+                )
             ) : id_user === state.currentId ? (
                 <VideoList data={myvideoList} />
             ) : (
